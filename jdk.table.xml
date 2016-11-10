@@ -1,0 +1,93 @@
+<application>
+  <component name="ProjectJdkTable">
+    <jdk version="2">
+      <name value="Python 2.7.11 (C:\Users\Seyon\Anaconda\python.exe)" />
+      <type value="Python SDK" />
+      <version value="Python 2.7.11" />
+      <homePath value="C:\Users\Seyon\Anaconda\python.exe" />
+      <roots>
+        <classPath>
+          <root type="composite">
+            <root type="simple" url="file://$USER_HOME$/Anaconda/DLLs" />
+            <root type="simple" url="file://$USER_HOME$/Anaconda/Lib" />
+            <root type="simple" url="file://$USER_HOME$/Anaconda/Lib/lib-tk" />
+            <root type="simple" url="file://$USER_HOME$/Anaconda" />
+            <root type="simple" url="file://$USER_HOME$/AppData/Roaming/Python/Python27/site-packages" />
+            <root type="simple" url="file://$USER_HOME$/Anaconda/Lib/site-packages" />
+            <root type="simple" url="file://$USER_HOME$/Anaconda/Lib/site-packages/Sphinx-1.3.1-py2.7.egg" />
+            <root type="simple" url="file://$USER_HOME$/Anaconda/Lib/site-packages/cryptography-0.9.1-py2.7-win-amd64.egg" />
+            <root type="simple" url="file://$USER_HOME$/Anaconda/Lib/site-packages/win32" />
+            <root type="simple" url="file://$USER_HOME$/Anaconda/Lib/site-packages/win32/lib" />
+            <root type="simple" url="file://$USER_HOME$/Anaconda/Lib/site-packages/pythonwin" />
+            <root type="simple" url="jar://$USER_HOME$/Anaconda/Lib/site-packages/setuptools-18.8.1-py2.7.egg!/" />
+            <root type="simple" url="file://$USER_HOME$/.PyCharm2016.2/system/python_stubs/825390076" />
+            <root type="simple" url="file://$APPLICATION_HOME_DIR$/helpers/python-skeletons" />
+          </root>
+        </classPath>
+        <sourcePath>
+          <root type="composite" />
+        </sourcePath>
+      </roots>
+      <additional />
+    </jdk>
+    <jdk version="2">
+      <name value="Python 3.5.1 (C:\Users\Seyon\Anaconda\envs\py35\python.exe)" />
+      <type value="Python SDK" />
+      <version value="Python 3.5.1" />
+      <homePath value="C:\Users\Seyon\Anaconda\envs\py35\python.exe" />
+      <roots>
+        <classPath>
+          <root type="composite">
+            <root type="simple" url="file://$USER_HOME$/Anaconda/envs/py35/DLLs" />
+            <root type="simple" url="file://$USER_HOME$/Anaconda/envs/py35/Lib" />
+            <root type="simple" url="file://$USER_HOME$/Anaconda/envs/py35" />
+            <root type="simple" url="file://$USER_HOME$/Anaconda/envs/py35/Lib/site-packages" />
+            <root type="simple" url="file://$USER_HOME$/Anaconda/envs/py35/Lib/site-packages/Sphinx-1.3.1-py3.5.egg" />
+            <root type="simple" url="file://$USER_HOME$/Anaconda/envs/py35/Lib/site-packages/cryptography-1.0.2-py3.5-win-amd64.egg" />
+            <root type="simple" url="file://$USER_HOME$/Anaconda/envs/py35/Lib/site-packages/win32" />
+            <root type="simple" url="file://$USER_HOME$/Anaconda/envs/py35/Lib/site-packages/win32/lib" />
+            <root type="simple" url="file://$USER_HOME$/Anaconda/envs/py35/Lib/site-packages/pythonwin" />
+            <root type="simple" url="jar://$USER_HOME$/Anaconda/envs/py35/Lib/site-packages/setuptools-18.5-py3.5.egg!/" />
+            <root type="simple" url="file://$USER_HOME$/.PyCharm2016.2/system/python_stubs/533172343" />
+            <root type="simple" url="file://$APPLICATION_HOME_DIR$/helpers/python-skeletons" />
+          </root>
+        </classPath>
+        <sourcePath>
+          <root type="composite" />
+        </sourcePath>
+      </roots>
+      <additional />
+    </jdk>
+    <jdk version="2">
+      <name value="Remote Python 3.5.2 (ssh://ss2165@linux.ds.cam.ac.uk:22/usr/bin/python3)" />
+      <type value="Python SDK" />
+      <version value="Python 3.5.2" />
+      <homePath value="ssh://ss2165@linux.ds.cam.ac.uk:22/usr/bin/python3" />
+      <roots>
+        <classPath>
+          <root type="composite">
+            <root type="simple" url="file://$USER_HOME$/.PyCharm2016.2/system/remote_sources/602917457/201545290" />
+            <root type="simple" url="file://$USER_HOME$/.PyCharm2016.2/system/remote_sources/602917457/452379848" />
+            <root type="simple" url="file://$USER_HOME$/.PyCharm2016.2/system/remote_sources/602917457/-1171821208" />
+            <root type="simple" url="file://$USER_HOME$/.PyCharm2016.2/system/python_stubs/602917457" />
+            <root type="simple" url="file://$APPLICATION_HOME_DIR$/helpers/python-skeletons" />
+          </root>
+        </classPath>
+        <sourcePath>
+          <root type="composite" />
+        </sourcePath>
+      </roots>
+      <additional HOST="linux.ds.cam.ac.uk" PORT="22" ANONYMOUS="false" USERNAME="ss2165" PASSWORD="dfe3dfdddfdedfd9dfdadfcbdfdfdf99df92dfd8dfcbdfdcdfcfdfc4" PRIVATE_KEY_FILE="" MY_KNOWN_HOSTS_FILE="" PASSPHRASE="" USE_KEY_PAIR="false" INTERPRETER_PATH="/usr/bin/python3" HELPERS_PATH="/home/ss2165/.pycharm_helpers" INITIALIZED="false" VALID="true" SKELETONS_PATH="" VERSION="">
+        <PathMappingSettings>
+          <option name="pathMappings">
+            <list>
+              <mapping local-root="$USER_HOME$/.PyCharm2016.2/system/remote_sources/602917457/201545290" remote-root="/usr/lib/python3.5" />
+              <mapping local-root="$USER_HOME$/.PyCharm2016.2/system/remote_sources/602917457/452379848" remote-root="/usr/lib/python3.5/plat-x86_64-linux-gnu" />
+              <mapping local-root="$USER_HOME$/.PyCharm2016.2/system/remote_sources/602917457/-1171821208" remote-root="/usr/lib/python3/dist-packages" />
+            </list>
+          </option>
+        </PathMappingSettings>
+      </additional>
+    </jdk>
+  </component>
+</application>

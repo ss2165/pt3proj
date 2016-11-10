@@ -1,0 +1,9 @@
+<application>
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="6d5a64c1-a95e-4655-90f3-fe984698d2f3" name="Physics Remote" url="http://sftp.ds.cam.ac.uk">
+        <fileTransfer port="0" mountedRoot="U:\" accessType="MOUNT" />
+      </webServer>
+    </option>
+  </component>
+</application>
