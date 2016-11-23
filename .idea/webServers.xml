@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="1f75820c-42e2-4d33-8579-66008f07df97" name="hep" url="http://www.hep.phy.cam.ac.uk/~ss2165">
+        <fileTransfer host="pcka.hep.phy.cam.ac.uk" port="22" rootFolder="/usera/ss2165/" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
