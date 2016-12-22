@@ -164,7 +164,7 @@ This project aims to apply machine learning methods to simulate particle detecto
 A key difference between basic GANs and this case is the requirement that the output $\mathbf{y}$ of $G$ match a given input $\mathbf{x}$. $G$ and $D$ must therefore be conditional on the event input. Such conditional use of GANs has been demonstrated \cite{mirza2014conditional}, and it can be shown that a simple modification of \cref{eq:minmax} is sufficient:
 
 \[
- \min_{G}\max_{D}V(D,G) = \mathbb{E}_{\mathbf{x}\sim p_{\text{data}}(\mathbf{x})} [\log(D(\mathbf{y|x})] + \mathbb{E}_{\mathbf{z}\sim p_{z}} [\log(1-D(G(z|\mathbf{x})))] 
+ \min_{G}\max_{D}V(D,G) = \mathbb{E}_{\mathbf{y}\sim p_{\text{data}}(\mathbf{y})} [\log(D(\mathbf{y|x})] + \mathbb{E}_{\mathbf{z}\sim p_{z}} [\log(1-D(G(z|\mathbf{x})))] 
 \]
 
 Furthermore, appending $\mathbf{x}$ to the input for each net is enough to achieve this. \cref{fig:mldiag} shows this set up.
