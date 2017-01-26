@@ -4,19 +4,27 @@ from keras.layers.core import Activation
 from keras.optimizers import SGD
 from keras.datasets import mnist
 import numpy as np
-from PIL import Image
+import matplotlib.pyplot as plt
 import argparse
 
+def real_rad(size, width):
+    return np.random.exponential(width, size)
+
+def real_angle(size):
+    return np.random.uniform(0, 2*np.pi, size)
+
+def real_logE(size, width, mean):
+    return np.random.normal(mean, width, size)
 
 def generator_model():
     model = Sequential()
-    model.add(Dense(input_dim=100, output_dim=784))
+    model.add(Dense(input_dim=3, output_dim=3))
     model.add(Activation('tanh'))
     return model
 
 def discriminator_model():
     model = Sequential()
-    model.add(Dense(input_dim=784, output_dim=784))
+    model.add(Dense(input_dim=3, output_dim=3))
     model.add(Activation('tanh'))
     model.add(Dense(1))
     model.add(Activation('sigmoid'))
@@ -30,9 +38,14 @@ def generator_containing_discriminator(generator, discriminator):
     return model
 
 def train(BATCH_SIZE):
-    (X_train, y_train), (X_test, y_test) = mnist.load_data()
-    X_train = (X_train.astype(np.float32) - 127.5) / 127.5
-    X_train = X_train.reshape(X_train.shape[0],-1)
+    # (X_train, y_train), (X_test, y_test) = mnist.load_data()
+    # X_train = (X_train.astype(np.float32) - 127.5) / 127.5
+    # X_train = X_train.reshape(X_train.shape[0],-1)
+    t_size = 10000
+    r_width = 100
+    E_width = 3
+    E_mean = -15
+    X_train = np.stack((real_rad(t_size, r_width), real_angle(t_size), real_logE(t_size, E_width, E_mean)), axis=-1)
     discriminator = discriminator_model()
     generator = generator_model()
     discriminator_on_generator = \
@@ -46,26 +59,25 @@ def train(BATCH_SIZE):
         loss='binary_crossentropy', optimizer=g_optim)
     discriminator.trainable = True
     discriminator.compile(loss='binary_crossentropy', optimizer=d_optim)
-    noise = np.zeros((BATCH_SIZE, 100))
+    noise = np.zeros((BATCH_SIZE, 3))
     for epoch in range(100):
         print("Epoch is", epoch)
-        print("Number of batches", int(X_train.shape[0]/BATCH_SIZE))
-        for index in range(int(X_train.shape[0]/BATCH_SIZE)):
+        batch_no = int(X_train.shape[0]/BATCH_SIZE)
+        print("Number of batches", batch_no)
+        for index in range(batch_no):
             for i in range(BATCH_SIZE):
-                noise[i, :] = np.random.uniform(-1, 1, 100)
-            image_batch = X_train[index * BATCH_SIZE:(index + 1) * BATCH_SIZE]
-            generated_images = generator.predict(noise, verbose=0)
-            if index % 80 == 0:
-                image = combine_images(generated_images)
-                image = image * 127.5 + 127.5
-                Image.fromarray(image.astype(np.uint8)).save(
-                    str(epoch) + "_" + str(index) + ".png")
-            X = np.concatenate((image_batch, generated_images))
+                noise[i, :] = np.random.uniform(-1, 1, 3)
+            train_batch = X_train[index * BATCH_SIZE:(index + 1) * BATCH_SIZE]
+            generated = generator.predict(noise, verbose=0)
+            if index % int(batch_no*BATCH_SIZE) == 0:
+                save_hist(train_batch, generated, epoch, index)
+
+            X = np.concatenate((train_batch, generated))
             y = [1] * BATCH_SIZE + [0] * BATCH_SIZE
             d_loss = discriminator.train_on_batch(X, y)
             print("batch %d d_loss : %f" % (index, d_loss))
             for i in range(BATCH_SIZE):
-                noise[i, :] = np.random.uniform(-1, 1, 100)
+                noise[i, :] = np.random.uniform(-1, 1, 3)
             discriminator.trainable = False
             g_loss = discriminator_on_generator.train_on_batch(
                 noise, [1] * BATCH_SIZE)
@@ -74,6 +86,13 @@ def train(BATCH_SIZE):
             if index % 10 == 9:
                 generator.save_weights('generator', True)
                 discriminator.save_weights('discriminator', True)
+
+
+def save_hist(dist1, dist2, epoch, index):
+    plt.hist(dist1[:, 0])
+    plt.hist(dist2[:, 0])
+    fig = plt.gcf()
+    plt.savefig('r_dist_{}_{}.png'.format(epoch, index))
 
 def combine_images(generated_images):
     generated_images=generated_images.reshape((generated_images.shape[0], 28, 28))
@@ -94,14 +113,11 @@ def generate(BATCH_SIZE):
     generator = generator_model()
     generator.compile(loss='binary_crossentropy', optimizer="SGD")
     generator.load_weights('generator')
-    noise = np.zeros((BATCH_SIZE, 100))
+    noise = np.zeros((BATCH_SIZE, 3))
     for i in range(BATCH_SIZE):
-        noise[i, :] = np.random.uniform(-1, 1, 100)
-    generated_images = generator.predict(noise, verbose=1)
-    image = combine_images(generated_images)
-
-    image = image * 127.5 + 127.5
-    Image.fromarray(image.astype(np.uint8)).save("generated_image.png")
+        noise[i, :] = np.random.uniform(-1, 1, 3)
+    generated = generator.predict(noise, verbose=1)
+    save_hist(generated, generated, "G", "G")
 
 def get_args():
     parser = argparse.ArgumentParser()
