@@ -2,7 +2,6 @@ from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers.core import Activation
 from keras.optimizers import SGD
-from keras.datasets import mnist
 import numpy as np
 import matplotlib.pyplot as plt
 import argparse
@@ -18,15 +17,17 @@ def real_logE(size, width, mean):
 
 def generator_model():
     model = Sequential()
-    model.add(Dense(input_dim=3, output_dim=3))
+    model.add(Dense(12, input_dim=3))
+    model.add(Activation('relu'))
+    model.add(Dense(1))
     model.add(Activation('tanh'))
     return model
 
 def discriminator_model():
     model = Sequential()
-    model.add(Dense(input_dim=3, output_dim=3))
-    model.add(Activation('tanh'))
-    model.add(Dense(1))
+    # model.add(Dense(12, input_dim=1))
+    # model.add(Activation('tanh'))
+    model.add(Dense(1, input_dim=1))
     model.add(Activation('sigmoid'))
     return model
 
@@ -40,12 +41,13 @@ def generator_containing_discriminator(generator, discriminator):
 def train(BATCH_SIZE):
     # (X_train, y_train), (X_test, y_test) = mnist.load_data()
     # X_train = (X_train.astype(np.float32) - 127.5) / 127.5
-    # X_train = X_train.reshape(X_train.shape[0],-1)
     t_size = 10000
     r_width = 100
     E_width = 3
     E_mean = -15
-    X_train = np.stack((real_rad(t_size, r_width), real_angle(t_size), real_logE(t_size, E_width, E_mean)), axis=-1)
+    # X_train = np.stack((real_rad(t_size, r_width), real_angle(t_size), real_logE(t_size, E_width, E_mean)), axis=-1)
+    X_train = real_logE(t_size, 1, 0)
+    X_train = X_train.reshape(X_train.shape[0],-1)
     discriminator = discriminator_model()
     generator = generator_model()
     discriminator_on_generator = \
@@ -60,7 +62,7 @@ def train(BATCH_SIZE):
     discriminator.trainable = True
     discriminator.compile(loss='binary_crossentropy', optimizer=d_optim)
     noise = np.zeros((BATCH_SIZE, 3))
-    for epoch in range(100):
+    for epoch in range(200):
         print("Epoch is", epoch)
         batch_no = int(X_train.shape[0]/BATCH_SIZE)
         print("Number of batches", batch_no)
@@ -68,7 +70,9 @@ def train(BATCH_SIZE):
             for i in range(BATCH_SIZE):
                 noise[i, :] = np.random.uniform(-1, 1, 3)
             train_batch = X_train[index * BATCH_SIZE:(index + 1) * BATCH_SIZE]
+
             generated = generator.predict(noise, verbose=0)
+
             if index % int(batch_no*BATCH_SIZE) == 0:
                 save_hist(train_batch, generated, epoch, index)
 
@@ -89,9 +93,10 @@ def train(BATCH_SIZE):
 
 
 def save_hist(dist1, dist2, epoch, index):
-    plt.hist(dist1[:, 0])
-    plt.hist(dist2[:, 0])
-    fig = plt.gcf()
+    plt.clf()
+    fig = plt.figure()
+    plt.hist(dist1, 50, histtype="step")
+    plt.hist(dist2, 50, histtype="step")
     plt.savefig('r_dist_{}_{}.png'.format(epoch, index))
 
 def combine_images(generated_images):
