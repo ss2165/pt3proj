@@ -12,10 +12,9 @@ import numpy as np
 
 import matplotlib.pyplot as plt
 from matplotlib.colors import LogNorm
-import seaborn as sns
+# import seaborn as sns
 
-from readjet import RootEvents, JetImage, average_image
-
+from readjet import RootEvents, JetImage, average_image, image_set
 
 def draw_jet(jet, etaran=6.0, phiran=4.0, step=0.1):
     """
@@ -53,16 +52,20 @@ def draw_jet(jet, etaran=6.0, phiran=4.0, step=0.1):
 
 def main(fname, output):
 
-    ents = RootEvents(fname, 100, 300)
+    ents = RootEvents(fname, 250, 300)
     images = []
     for ev in ents:
         im0 = JetImage(ev, dim=(25,25), phiran=(-1.25, 1.25), etaran=(-1.25, 1.25))
         im0.sj2_rotate()
         im0.normalise()
+        print(im0.tau21())
         images.append(im0)
     print(len(images))
-    av = average_image(images)
-    av.draw()
+    # av = average_image(images)
+    # av.draw()
+    print(image_set(images).shape)
+    # maxim = max(images, key=lambda item: item.discrete_pT())
+    # maxim.plot()
 
 
 
