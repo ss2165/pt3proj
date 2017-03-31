@@ -195,14 +195,10 @@ def plot_jet(image_array, etaran=(-1.25,1.25), phiran=(-1.25,1.25), output_name=
         plt.savefig(output_name)
 
 
-def average_image(images):
-    #avereage image from list of JetImage
-    im_ar = image_set(images)
-    av_im = np.mean(im_ar, axis=0)
-    #TODO average momenta
-    final_image = images[0]
-    final_image.image_array = av_im
-    return final_image
+def average_image(images_array):
+    #avereage image from array of images
+    return np.mean(images_array, axis=0)
+
 
 
 def maxim(images):

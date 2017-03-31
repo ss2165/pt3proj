@@ -40,21 +40,21 @@ def main(fname, output, ptmin, ptmax):
 
     # print("Images processed: {}".format(len(images)))
 
+    im_ar=image_set(images)
     if output is not None:
         print("Saving.")
-        im_ar=image_set(images)
         # savefile=os.path.abspath(os.path.join('~','pt3proj','data', output))
         if len(im_ar) >0:
             savefile=os.path.abspath(output)
             with h5py.File(savefile, "a") as f:
                 sname = set_name(f.keys())
                 dset = f.create_dataset(sname, data=im_ar, chunks=True)
-                                        #chunks=(100, im_ar.shape[1], im_ar.shape[2]))
+                #chunks=(100, im_ar.shape[1], im_ar.shape[2]))
         else:
             print("No images read.")
     else:
         #if no output is specified just plot average image
-        av = average_image(images)
+        av = average_image(im_ar)
         plot_jet(av)
 
 def set_name(keys):
