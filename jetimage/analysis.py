@@ -3,7 +3,7 @@ from matplotlib import cm
 import matplotlib.pyplot as plt
 from matplotlib.colors import Normalize, LogNorm
 
-from readjet import delta_phi
+from readjet import delta_phi, JetImage
 
 
 def plot_diff(phiran, etaran, image_array, output_name=None, extr=None, title='', cmap=cm.PRGn_r):
@@ -42,7 +42,9 @@ def plot_diff(phiran, etaran, image_array, output_name=None, extr=None, title=''
         plt.savefig(output_name)
 
 
-def discrete_pT(image_array, phivals):
+def discrete_pT(image_array, phivals=None):
+    if phivals is None:
+        phivals = JetImage.generate_coords((-1.25, 1.25), 25, 25)
     #calculate the image pT
     cos_term = image_array * np.cos(phivals)
     sin_term = image_array * np.sin(phivals)
@@ -203,7 +205,8 @@ def average_image(images_array):
 
 def maxim(images):
     #return the JetImage object with highest discrete pT in list
-    return max(images, key=lambda item: discrete_pT(item.image_array, item.phivals))
+    return max(images, key=lambda item: discrete_pT(item))
+    # return max(images, key=lambda item: discrete_pT(item.image_array, item.phivals))
 
 
 def image_set(images):

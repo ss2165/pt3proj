@@ -173,7 +173,13 @@ class JetImage:
             e, p = self.pca_dir()
         else:
             e, p = self.centre(e, p)
-        angle = np.arctan(p / e) + np.pi/2
+        try:
+            if e==0:
+                angle = 3*np.pi/2
+            else:
+                angle = np.arctan(p / e) + np.pi/2
+        except RuntimeWarning:
+            return angle
 
         if (-np.sin(angle) * e + np.cos(angle) * p) > 0:
             angle += -np.pi
@@ -243,8 +249,11 @@ class JetImage:
         i = dim[1] -1 - int(np.floor(dim[1] * (var[1] - ran[1][0]) / (ran[1][1] - ran[1][0])))
         return j, i
 
-    def normalise(self):
-        self.image_array /= np.linalg.norm(self.image_array)
+    def normalise(self, normaliser=None):
+        if normaliser is None:
+            self.image_array /= np.linalg.norm(self.image_array)
+        else:
+            self.image_array /= normaliser
         return self.image_array
 
 

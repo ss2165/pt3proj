@@ -1,9 +1,10 @@
+#!/usera/ss2165/anaconda2/bin python
 """Usage:
     gen.py <in_file> [-w] [-o <out_file>] [--ptmin=<ptmin>] [--ptmax=<ptmax>]
     gen.py -h | --help
 
 Arguments:
-    <in_file> Root file to extract from
+    <in_file>  Root file to extract from
 
 Options:
     -h --help        Show this screen
@@ -21,20 +22,22 @@ import h5py
 
 from tqdm import tqdm
 from jetimage.readjet import RootEvents, JetImage
-from jetimage.analysis import plot_jet, average_image, image_set
+from jetimage.analysis import plot_jet, average_image, image_set, maxim
 
 
 def main(fname, output, ptmin, ptmax):
     print("Reading ROOT file.")
     jets = RootEvents(fname, ptmin=ptmin, ptmax=ptmax)
     images = []
-
+    norm = 4000.0
     print("Pre-processing Jet images.")
     for jet in tqdm(jets):
         im0 = JetImage(jet)
+        np.clip(im0.image_array, -1, norm, out=im0.image_array)
+        im0.normalise(norm)
         im0.sj2_rotate()
-        im0.normalise()
         im0.flip()
+        im0.normalise(1./norm)
         # plot_jet(im0)
         images.append(im0)
 
@@ -54,6 +57,7 @@ def main(fname, output, ptmin, ptmax):
             print("No images read.")
     else:
         #if no output is specified just plot average image
+        # plot_jet(maxim(im_ar))
         av = average_image(im_ar)
         plot_jet(av)
 
