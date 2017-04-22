@@ -26,7 +26,17 @@ from jetimage.analysis import plot_jet, average_image, image_set, maxim
 
 
 def main(fname, output, ptmin, ptmax):
-    print("Reading ROOT file.")
+    #fname should just be 'wprime' or 'qcd', i.e. prefix only
+    jobran = range(100)
+    for jobno in jobran:
+        padjob = '_{0:03d}'.format(jobno)
+        f2name = '/r02/atlas/ss2165/'+fname + padjob + '.root'
+        #run in pt3proj root
+        main_old(f2name, 'data/'+fname+'.hdf', ptmin, ptmax)
+
+def main_old(fname, output, ptmin, ptmax):
+
+    print("Reading ROOT file: {}".format(fname))
     jets = RootEvents(fname, ptmin=ptmin, ptmax=ptmax)
     images = []
     norm = 4000.0

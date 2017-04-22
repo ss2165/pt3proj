@@ -68,7 +68,7 @@ class Jet:
 
 
 class RootEvents:
-    def __init__(self, fname, ptmin, ptmax):
+    def __init__(self, fname, ptmin, ptmax, mass_min=60, mass_max=100):
         print("Running ROOT macro.")
         start = time.clock()
         trimp4 = self.extract_subjets(fname)
@@ -98,7 +98,7 @@ class RootEvents:
 
             #take leading jet and its subjets
             j = bjet.At(0)
-            if ptmin <= j.PT <= ptmax:
+            if ptmin <= j.PT <= ptmax and mass_min<=j.Mass<=mass_max:
                 self.events.append(Jet(j, subjets))
 
     def extract_subjets(self, fname):
@@ -167,22 +167,22 @@ class JetImage:
         return e-self.ec, delta_phi(p,self.pc)
 
     def sj2_rotate(self):
-        #rotate second subjet to -pi.2
-        e, p = (self.subjets[2].Eta(), self.subjets[2].Phi())
+        #rotate second subjet to -pi/2
+        e, p = self.centre(self.subjets[2].Eta(), self.subjets[2].Phi())
         if e < -10 or p < -10:
+            print('hit')
             e, p = self.pca_dir()
-        else:
-            e, p = self.centre(e, p)
+
         try:
             if e==0:
-                angle = 3*np.pi/2
+                angle = np.pi
             else:
                 angle = np.arctan(p / e) + np.pi/2
         except RuntimeWarning:
             return angle
 
         if (-np.sin(angle) * e + np.cos(angle) * p) > 0:
-            angle += -np.pi
+            angle -= np.pi
         self.image_array = sk.rotate(self.image_array, np.rad2deg(-angle), order = 3)
         return self.image_array
 

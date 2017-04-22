@@ -17,13 +17,16 @@ import numpy as np
 from jetimage.analysis import  plot_jet, average_image
 
 def main(fname, plot, dset):
+    arrays = []
     with h5py.File(fname, 'r') as f:
         print("(Key, shape)")
         for key in f.keys():
-            print(key, f[key][:].shape)
-        if dset is not None:
-            ar = f[dset][:]
-        # print(ar.sum())
+            # print(key, f[key][:].shape)
+            arrays.append(f[key][:])
+
+    images = np.vstack(arrays)
+    with h5py.File(dset, 'w') as f:
+        dset = f.create_dataset('images', data=images, chunks=True)
     if plot:
         av = average_image(ar)
         plot_jet(av)

@@ -29,7 +29,7 @@ if seed is None:
     seed = abs(((tseed * 181) * ((getpid() - 83) * 359)) % 104729)
 
 home = path.expanduser('~')
-template_file = path.abspath(path.join(home, 'pt3proj', 'configs', 'template.cmnd'))
+template_file = path.abspath(path.join(home, 'pt3proj', 'jetimage', 'template.cmnd'))
 with open(template_file, "r") as f:
     lines = f.readlines()
 
@@ -52,12 +52,12 @@ elif process=="qcd":
 else:
     raise ValueError("process = wprime/qcd")
 
-pythia_card = path.abspath('/tmp/ss2165/tmppythcard.cmnd')
+pythia_card = path.abspath('/usera/ss2165/tmp/tmppythcard.cmnd')
 with open(pythia_card, "w") as f:
     f.writelines(lines)
 
 delphes_card = path.abspath(path.join(home,'pt3proj/configs/ATLAS_me.tcl'))
-remove(fname)
+# remove(fname)
 shell_command = ['DelphesPythia8', delphes_card, pythia_card, fname]
 # proc = subprocess.Popen(shell_command, stdout=subprocess.PIPE)
 subprocess.call(shell_command)
