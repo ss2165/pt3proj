@@ -32,7 +32,7 @@ def main(fname, output, ptmin, ptmax):
         padjob = '_{0:03d}'.format(jobno)
         f2name = '/r02/atlas/ss2165/'+fname + padjob + '.root'
         #run in pt3proj root
-        main_old(f2name, 'data/'+fname+'.hdf', ptmin, ptmax)
+        main_old(f2name, '/usera/ss2165/pt3proj/data/'+fname+'.hdf', ptmin, ptmax)
 
 def main_old(fname, output, ptmin, ptmax):
 

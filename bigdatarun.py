@@ -6,9 +6,9 @@ import subprocess
 import os
 
 jobran = range(100)
-
+runset=4
 for jobno in jobran:
-    seed = jobno+1
+    seed = runset*(jobno+1)
     padjob = '{0:03d}'.format(jobno)
     jobfile = 'q_job{}.sh'.format(padjob)
     with open(os.path.abspath("/usera/ss2165/pt3proj/configs/base_condor.sh"), 'r') as f:
@@ -18,7 +18,7 @@ for jobno in jobran:
         f.writelines(lines)
     with open(jobfile, 'w') as f:
         f.write("#!/bin/sh\n")
-        f.write("python ~/pt3proj/jetimage/pythia_card.py qcd /r02/atlas/ss2165/qcd_{}.root 100000 -s {}\n".format(padjob, seed))
+        f.write("python ~/pt3proj/jetimage/pythia_card.py qcd /r02/atlas/ss2165/qcd{}_{}.root 100000 -s {}\n".format(runset,padjob, seed))
 
     shell_command = ['condor_submit_me', jobfile]
     subprocess.call(shell_command)
