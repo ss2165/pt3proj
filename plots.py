@@ -8,9 +8,12 @@ import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 from matplotlib.colors import LogNorm, Normalize
+from tqdm import tqdm
 
 import h5py
-
+# Set Latex font for figures
+plt.rc('text', usetex=True)
+plt.rc('font', family='serif')
 def discrete_mass(jet_image):
     '''
     Calculates the jet mass from a pixelated jet image
@@ -46,6 +49,7 @@ def discrete_pt(jet_image):
     Py = np.sum(jet_image * np.sin(phi), axis=(1, 2))
     return np.sqrt(np.square(Px) + np.square(Py))
 
+
 def dphi(phi1, phi2):
     '''
     Calculates the difference between two angles avoiding |phi1 - phi2| > 180 degrees
@@ -53,8 +57,9 @@ def dphi(phi1, phi2):
     import math
     return math.acos(math.cos(abs(phi1 - phi2)))
 
+
 def _tau1(jet_image):
-    '''
+    """
     Calculates the normalized tau1 from a pixelated jet image
     Args:
     -----
@@ -62,7 +67,7 @@ def _tau1(jet_image):
     Returns:
     --------
         float, normalized jet tau1
-    '''
+    """
     # find coordinate of most energetic pixel, then use formula to compute tau1
     tau1_axis_eta = eta.ravel()[np.argmax(jet_image)]
     tau1_axis_phi = phi.ravel()[np.argmax(jet_image)]
@@ -85,10 +90,10 @@ def _tau2(jet_image):
     ------
         slow implementation
     '''
-    proto = np.array(zip(jet_image[jet_image != 0],
+    # print(jet_image[jet_image != 0])
+    proto = np.array(list(zip(jet_image[jet_image != 0],
                          eta[jet_image != 0],
-                         phi[jet_image != 0]))
-
+                         phi[jet_image != 0])))
     while len(proto) > 2:
         candidates = [
             (
@@ -144,100 +149,213 @@ def tau21(jet_image):
     ------
         slow implementation
     '''
-    tau1 = _tau1(jet_image)
-    if tau1 <= 0:
-        return 0
-    else:
-        tau2 = _tau2(jet_image)
-        return tau2 / tau1
+    # sh = jet_image.shape
+    # jet_image = jet_image.reshape(())
+    ar = []
+    for image in tqdm(jet_image):
+        # image = image.reshape((1, 25, 25))
+        tau1 = _tau1(image)
+        if tau1 <= 0:
+            ar.append(0)
+        else:
+            tau2 = _tau2(image)
+            ar.append(tau2 / tau1)
+    return np.array(ar)
 
-training_file = 'data/prepared.hdf'
-with h5py.File(training_file, 'r') as f:
-    real_images = f['image'][:]
-    real_labels = f['signal'][:]
-    real_images[real_images < 1e-3] = 0.0  # everything below 10^-3 is unphysical and due to instabilities in the rotation
 
-n_jets = real_images.shape[0]
-latent_space = 200 # size of the vector z
+##PIXEL INTENSITY
+def pixel_intensity(real_images, generated_images, outdir):
+    fig, ax = plt.subplots(figsize=(6, 6))
 
-gen_weights = 'models/params_generator_epoch_049.hdf5'
-disc_weights = 'models/params_discriminator_epoch_049.hdf5'
+    _, bins, _ = plt.hist(real_images.ravel(),
+                          bins=np.linspace(0, 300, 50), histtype='step', label='Pythia', color='purple')
+    _ = plt.hist(generated_images.ravel(),
+                 bins=bins, histtype='step', label='GAN', color='green')
 
-from models.networks.lagan import generator as build_generator
-g = build_generator(latent_space, return_intermediate=False)
-g.load_weights(gen_weights)
+    plt.xlabel('Pixel Intensity')
+    plt.ylabel('Number of Pixels')
+    plt.yscale('log')
+    plt.legend(loc='upper right')
 
-noise = np.random.normal(0, 1, (n_jets, latent_space))
-sampled_labels = np.random.randint(0, 2, n_jets)
-generated_images = g.predict(
-    [noise, sampled_labels.reshape(-1, 1)], verbose=False, batch_size=64)
-from jetimage.analysis import average_image, plot_jet
+    # plt.savefig(os.path.join(outdir, 'pixel_intensity.pdf'))
 
-generated_images *= 100
-generated_images = np.squeeze(generated_images)
-# generated_images = generated_images.reshape(generated_images.shape[:-1])
-signal_images = generated_images[sampled_labels==1]
-noise_images = generated_images[sampled_labels==0]
-av_gen = average_image(signal_images)
-av_noise = average_image(noise_images)
+##MASS
+def mass_dist(real_images, generated_iamges, outdir):
+    fig, ax = plt.subplots(figsize=(6, 6))
+    bins = np.linspace(50, 200, 50)
+    _ = plt.hist(discrete_mass(generated_images[sampled_labels == 1]),
+                 bins=bins, histtype='step', label=r"generated ($W' \rightarrow WZ$)", normed=True, color='red')
+    _ = plt.hist(discrete_mass(real_images[real_labels == 1]),
+                 bins=bins, histtype='step', label=r"Pythia ($W' \rightarrow WZ$)", normed=True, color='red', linestyle='dashed')
 
-# for i in range(10):
-#     plot_jet(noise_images[i])
-# plot_jet(av_gen)
-# plot_jet(av_noise)
+    _ = plt.hist(discrete_mass(generated_images[sampled_labels == 0]),
+                 bins=bins, histtype='step', label=r'generated (QCD dijets)', normed=True, color='blue')
+    _ = plt.hist(discrete_mass(real_images[real_labels == 0]),
+                 bins=bins, histtype='step', label=r'Pythia (QCD dijets)', normed=True, color='blue', linestyle='dashed')
+
+    plt.xlabel(r'Discretized $m$ of Jet Image')
+    plt.ylabel(r'Units normalized to unit area')
+    plt.legend()
+    plt.ylim(0, 0.11)
+    # plt.savefig(os.path.join(outdir, 'mass.pdf'))
+
+
+def pt_dist(real_images, generated_images, outdir):
+    ##PT
+    fig, ax = plt.subplots(figsize=(6, 6))
+    bins = np.linspace(100, 600, 50)
+    _ = plt.hist(discrete_pt(generated_images[sampled_labels == 1]),
+                 bins=bins, histtype='step', label=r"generated ($W' \rightarrow WZ$)", normed=True, color='red')
+    _ = plt.hist(discrete_pt(real_images[real_labels == 1]),
+                 bins=bins, histtype='step', label=r"Pythia ($W' \rightarrow WZ$)", normed=True, color='red',
+                 linestyle='dashed')
+
+    _ = plt.hist(discrete_pt(generated_images[sampled_labels == 0]),
+                 bins=bins, histtype='step', label=r'generated (QCD dijets)', normed=True, color='blue')
+    _ = plt.hist(discrete_pt(real_images[real_labels == 0]),
+                 bins=bins, histtype='step', label=r'Pythia (QCD dijets)', normed=True, color='blue',
+                 linestyle='dashed')
+    plt.xlabel(r'Discretized $p_T$ of Jet Image')
+    plt.ylabel(r'Units normalized to unit area')
+    plt.legend()
+    plt.ylim(0, 0.045)
+    # plt.savefig(os.path.join(outdir, 'pt.pdf'))
+
+def tau21_dist(real_images, generated_images, outdir):
+    ##PT
+    fig, ax = plt.subplots(figsize=(6, 6))
+    bins = np.linspace(0, 1, 50)
+    _ = plt.hist(tau21(generated_images[sampled_labels == 1]),
+                 bins=bins, histtype='step', label=r"generated ($W' \rightarrow WZ$)", normed=True, color='red')
+    _ = plt.hist(tau21(real_images[real_labels == 1]),
+                 bins=bins, histtype='step', label=r"Pythia ($W' \rightarrow WZ$)", normed=True, color='red',
+                 linestyle='dashed')
+
+    _ = plt.hist(tau21(generated_images[sampled_labels == 0]),
+                 bins=bins, histtype='step', label=r'generated (QCD dijets)', normed=True, color='blue')
+    _ = plt.hist(tau21(real_images[real_labels == 0]),
+                 bins=bins, histtype='step', label=r'Pythia (QCD dijets)', normed=True, color='blue',
+                 linestyle='dashed')
+    plt.xlabel(r'Discretized $p_T$ of Jet Image')
+    plt.ylabel(r'Units normalized to unit area')
+    plt.legend()
+    plt.ylim(0, 6.0)
+    # plt.savefig(os.path.join(outdir, 'tau21.pdf'))
+
+def load_images(filename):
+    with h5py.File(os.path.abspath(filename), 'r') as f:
+        images = f['image'][:]
+        labels = f['signal'][:]
+        images[images < 1e-3] = 0.0  # everything below 10^-3 is unphysical and due to instabilities in the rotation
+
+    return images, labels
+
+def plot_diff_jet_image(
+                    content,
+                    output_name=None,
+                    extr=None,
+                    title='',
+                    cmap='PiYG'):
+    '''
+    Function to help you visualize the difference between two sets of jet images on a linear scale
+    Args:
+    -----
+       content : numpy array of dimensions 25x25, first arg to imshow, content of the image
+                 e.g.: generated_images.mean(axis=0) - real_images.mean(axis=0) --> difference between avg generated and avg Pythia image
+                       etc...
+       output_name : string, name of the output file where the plot will be saved. Note: it will be located in ../plots/
+       extr : (default = None) float, magnitude of the upper and lower bounds of the pixel intensity scale before saturation (symmetric around 0)
+       title : (default = '') string, title of the plot, to be displayed on top of the image
+       cmap : (default = matplotlib.cm.PRGn_r) matplotlib colormap, ideally white in the middle
+    Outputs:
+    --------
+       no function returns
+       saves file in ../plots/output_name
+    '''
+    fig, ax = plt.subplots(figsize=(6, 6))
+    extent=[-1.25, 1.25, -1.25, 1.25]
+    if extr == None:
+        extr = max( abs(content.min()), abs(content.max()))
+    im = ax.imshow(content,
+                   interpolation='nearest', norm=Normalize(vmin=-extr, vmax=+extr), extent=extent,
+                   cmap=cmap)
+    plt.colorbar(im, fraction=0.05, pad=0.05)
+    plt.xlabel(r'[Transformed] Pseudorapidity $(\eta)$')
+    plt.ylabel(r'[Transformed] Azimuthal Angle $(\phi)$')
+    plt.title(title)
+    # plt.savefig(os.path.join('..', outdir, output_name))
+
+sixk = True
+latent_space = 200  # size of the vector z
+if sixk:
+    training_file = 'data/prepared_6k.hdf'
+    generated_file = 'data/generated_01_6k.hdf'
+
+    n_jets = 60000
+
+    gen_weights = 'models/weights_1_6k/params_generator_epoch_049.hdf5'
+    disc_weights = 'models/params_discriminator_epoch_049.hdf5'
+
+else:
+    training_file = 'data/prepared_24k.hdf'
+    generated_file = 'data/generated_02_24k.hdf'
+
+    n_jets = 25000
+    latent_space = 200  # size of the vector z
+
+    gen_weights = 'models/weights_2_24k/params_generator_epoch_049.hdf5'
+    disc_weights = 'models/weights_2_24k/params_discriminator_epoch_049.hdf5'
+
+real_images, real_labels = load_images(training_file)
+generated_images, sampled_labels = load_images(generated_file)
 
 outdir = 'plots'
+
+# from models.networks.lagan import generator as build_generator
+# g = build_generator(latent_space, return_intermediate=False)
+# g.load_weights(os.path.abspath(gen_weights))
+#
+# noise = np.random.normal(0, 1, (n_jets, latent_space))
+# sampled_labels = np.random.randint(0, 2, n_jets)
+# generated_images = g.predict(
+#     [noise, sampled_labels.reshape(-1, 1)], verbose=False, batch_size=64)
+# generated_images *= 100
+# generated_images = np.squeeze(generated_images)
+
+##PLOT IMAGES
+from jetimage.analysis import average_image, plot_jet
+
+signal_gen = generated_images[sampled_labels == 1]
+noise_gen = generated_images[sampled_labels == 0]
+signal_real = real_images[real_labels == 1]
+noise_real = real_images[real_labels == 0]
+
+av_sig_gen = average_image(signal_gen)
+av_noise_gen = average_image(noise_gen)
+av_sig_real = average_image(signal_real)
+av_noise_real = average_image(noise_real)
+#
+# for i in range(10):
+#     plot_jet(signal_gen[i])
+# plot_jet(av_sig_gen)
+# plot_jet(av_sig_gen)
+
+# plot_jet(
+#     generated_images.mean(axis=0),
+#     title='Average generated image'
+# )
+# -- plot the difference between the mean Pythia image and the mean GAN image
+# In this case, the green pixels are more strongly activated in GAN images than in Pythia images.
+# The purple pixels are more strongly activated in Pythia images than GAN images.
+# plot_diff_jet_image(real_images.mean(axis=0) - generated_images.mean(axis=0),
+#     title='Difference between average P+D image \n and average generated image',)
+
 grid = 0.5 * (np.linspace(-1.25, 1.25, 26)[:-1] + np.linspace(-1.25, 1.25, 26)[1:])
 eta = np.tile(grid, (25, 1))
 phi = np.tile(grid[::-1].reshape(-1, 1), (1, 25))
-##PIXEL INTENSITY
-# fig, ax = plt.subplots(figsize=(6, 6))
-#
-# _, bins, _ = plt.hist(real_images.ravel(),
-#            bins=np.linspace(0, 300,50), histtype='step', label='Pythia', color='purple')
-# _ = plt.hist(generated_images.ravel(),
-#              bins=bins, histtype='step', label='GAN', color='green')
-#
-# plt.xlabel('Pixel Intensity')
-# plt.ylabel('Number of Pixels')
-# plt.yscale('log')
-# plt.legend(loc='upper right')
-#
-# plt.savefig(os.path.join(outdir, 'pixel_intensity.pdf'))
 
-##MASS
-fig, ax = plt.subplots(figsize=(6, 6))
-bins = np.linspace(40, 120, 50)
-_ = plt.hist(discrete_mass(generated_images[sampled_labels == 1]),
-             bins=bins, histtype='step', label=r"generated ($W' \rightarrow WZ$)", normed=True, color='red')
-_ = plt.hist(discrete_mass(real_images[real_labels == 1]),
-             bins=bins, histtype='step', label=r"Pythia ($W' \rightarrow WZ$)", normed=True, color='red', linestyle='dashed')
+tau21_dist(real_images, generated_images, outdir)
+plt.show()
 
-_ = plt.hist(discrete_mass(generated_images[sampled_labels == 0]),
-             bins=bins, histtype='step', label=r'generated (QCD dijets)', normed=True, color='blue')
-_ = plt.hist(discrete_mass(real_images[real_labels == 0]),
-             bins=bins, histtype='step', label=r'Pythia (QCD dijets)', normed=True, color='blue', linestyle='dashed')
 
-plt.xlabel(r'Discretized $m$ of Jet Image')
-plt.ylabel(r'Units normalized to unit area')
-plt.legend()
-plt.ylim(0, 0.11)
-plt.savefig(os.path.join(outdir, 'mass.pdf'))
 
-##PT
-fig, ax = plt.subplots(figsize=(6, 6))
-bins = np.linspace(200, 340, 50)
-_ = plt.hist(discrete_pt(generated_images[sampled_labels == 1]),
-             bins=bins, histtype='step', label=r"generated ($W' \rightarrow WZ$)", normed=True, color='red')
-_ = plt.hist(discrete_pt(real_images[real_labels == 1]),
-             bins=bins, histtype='step', label=r"Pythia ($W' \rightarrow WZ$)", normed=True, color='red', linestyle='dashed')
-
-_ = plt.hist(discrete_pt(generated_images[sampled_labels == 0]),
-             bins=bins, histtype='step', label=r'generated (QCD dijets)', normed=True, color='blue')
-_ = plt.hist(discrete_pt(real_images[real_labels == 0]),
-             bins=bins, histtype='step', label=r'Pythia (QCD dijets)', normed=True, color='blue', linestyle='dashed')
-plt.xlabel(r'Discretized $p_T$ of Jet Image')
-plt.ylabel(r'Units normalized to unit area')
-plt.legend()
-plt.ylim(0, 0.045)
-plt.savefig(os.path.join(outdir, 'pt.pdf'))

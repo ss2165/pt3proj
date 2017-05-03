@@ -1,7 +1,7 @@
 #!/usera/ss2165/anaconda2/bin python
 """Usage:
-    gen.py <in_file> [-w] [-o <out_file>] [--ptmin=<ptmin>] [--ptmax=<ptmax>]
-    gen.py -h | --help
+    data_gen.py <in_file> [-w] [-o <out_file>] [--ptmin=<ptmin>] [--ptmax=<ptmax>]
+    data_gen.py -h | --help
 
 Arguments:
     <in_file>  Root file to extract from
