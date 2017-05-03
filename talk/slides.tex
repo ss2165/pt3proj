@@ -1,0 +1,85 @@
+\documentclass{beamer}
+
+	\usepackage{datetime}
+	\newdate{date}{04}{05}{2017}
+	\usepackage[utf8]{inputenc}
+		\usetheme{Darmstadt}
+	\usepackage{graphicx}
+	\graphicspath{{../fig/}}
+	\usepackage{siunitx}
+	\sisetup{separate-uncertainty}
+	\usepackage{url}
+	\usepackage{microtype}
+	\usepackage[backend=bibtex,sorting=none]{biblatex}
+	\bibliography{biblo} %Insert Bibliography file name
+	\setlength\parindent{0pt}
+	\usepackage{subcaption}
+	\usepackage{float} 
+	\usepackage{commath}
+	\usepackage{amsfonts}
+	\usepackage{booktabs}
+	\setlength\heavyrulewidth{1.5pt}
+	\usepackage[capitalise]{cleveref}
+	\usepackage{pgfgantt}
+
+%Information to be included in the title page:
+\title{Machine Learning based simulation of Particle Physics Detectors}
+\author{Seyon Sivarajah}
+
+\date{\displaydate{date}}
+
+
+
+\begin{document}
+	
+	\frame{\titlepage}
+	\begin{frame}
+		\frametitle{Table of Contents}
+		\tableofcontents
+	\end{frame}
+	
+	\section{Detector Simulations}
+	\label{sec:detsims}
+	
+		\begin{frame}
+			\frametitle{Sample frame title}
+			\begin{itemize}
+				\item<1->
+				This is a text in first frame.
+				\item<2->
+				Second
+			\end{itemize}
+			 This is a text in first frame. This is a text in first frame. \alert{highlighted} 
+			\begin{block}{Remark}
+				Sample text
+			\end{block}
+		\end{frame}
+	
+	\section{Generative Adversarial Networks}
+	\label{sec:gans}
+		\begin{frame}
+		\frametitle{Sample frame title}
+		This is a text in first frame. This is a text in first frame. This is a text in first frame. \alert{highlighted} 
+		\begin{block}{Remark}
+			Sample text
+		\end{block}
+		\end{frame}
+
+	\section{Jet-images}
+	\label{sec:jetims}
+		\begin{frame}
+			\frametitle{Sample frame title}
+			This is a text in first frame. This is a text in first frame. This is a text in first frame. \alert{highlighted} 
+			\begin{block}{Remark}
+				Sample text
+			\end{block}
+		\end{frame}
+	
+	
+	
+	
+
+	
+	
+	
+\end{document}
