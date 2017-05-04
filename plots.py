@@ -126,15 +126,18 @@ def _tau2(jet_image):
 
         proto = np.delete(proto, pix2, axis=0).tolist()
 
-    (_, eta1, phi1), (_, eta2, phi2) = proto
-    np.sqrt(np.square(eta - eta1) + np.square(phi - phi1))
+    if len(proto)>0:
+        (_, eta1, phi1), (_, eta2, phi2) = proto
+        np.sqrt(np.square(eta - eta1) + np.square(phi - phi1))
 
-    grid = np.array([
-        np.sqrt(np.square(eta - eta1) + np.square(phi - phi1)),
-        np.sqrt(np.square(eta - eta2) + np.square(phi - phi2))
-    ]).min(axis=0)
+        grid = np.array([
+            np.sqrt(np.square(eta - eta1) + np.square(phi - phi1)),
+            np.sqrt(np.square(eta - eta2) + np.square(phi - phi2))
+        ]).min(axis=0)
 
-    return np.sum(jet_image * grid) / np.sum(jet_image) # normalize by the total intensity
+        return np.sum(jet_image * grid) / np.sum(jet_image) # normalize by the total intensity
+    else:
+        return 0.0
 
 def tau21(jet_image):
     '''
@@ -180,8 +183,8 @@ def pixel_intensity(real_images, generated_images, outdir):
     # plt.savefig(os.path.join(outdir, 'pixel_intensity.pdf'))
 
 ##MASS
-def mass_dist(real_images, generated_iamges, outdir):
-    fig, ax = plt.subplots(figsize=(6, 6))
+def mass_dist(real_images, generated_imagesm, title='Title'):
+    # fig, ax = plt.subplots(figsize=(6, 6))
     bins = np.linspace(50, 200, 50)
     _ = plt.hist(discrete_mass(generated_images[sampled_labels == 1]),
                  bins=bins, histtype='step', label=r"generated ($W' \rightarrow WZ$)", normed=True, color='red')
@@ -196,13 +199,16 @@ def mass_dist(real_images, generated_iamges, outdir):
     plt.xlabel(r'Discretized $m$ of Jet Image')
     plt.ylabel(r'Units normalized to unit area')
     plt.legend()
-    plt.ylim(0, 0.11)
+
+    plt.ticklabel_format(style='sci', axis='y', scilimits=(0, 0))
+    plt.ylim(0, 0.03)
+    plt.title(title)
     # plt.savefig(os.path.join(outdir, 'mass.pdf'))
 
 
-def pt_dist(real_images, generated_images, outdir):
+def pt_dist(real_images, generated_images, title='Title'):
     ##PT
-    fig, ax = plt.subplots(figsize=(6, 6))
+    # fig, ax = plt.subplots(figsize=(6, 6))
     bins = np.linspace(100, 600, 50)
     _ = plt.hist(discrete_pt(generated_images[sampled_labels == 1]),
                  bins=bins, histtype='step', label=r"generated ($W' \rightarrow WZ$)", normed=True, color='red')
@@ -218,29 +224,33 @@ def pt_dist(real_images, generated_images, outdir):
     plt.xlabel(r'Discretized $p_T$ of Jet Image')
     plt.ylabel(r'Units normalized to unit area')
     plt.legend()
-    plt.ylim(0, 0.045)
+    plt.ylim(0, 0.015)
+    plt.ticklabel_format(style='sci', axis='y', scilimits=(0, 0))
+    plt.title(title)
+
     # plt.savefig(os.path.join(outdir, 'pt.pdf'))
 
-def tau21_dist(real_images, generated_images, outdir):
-    ##PT
-    fig, ax = plt.subplots(figsize=(6, 6))
-    bins = np.linspace(0, 1, 50)
-    _ = plt.hist(tau21(generated_images[sampled_labels == 1]),
-                 bins=bins, histtype='step', label=r"generated ($W' \rightarrow WZ$)", normed=True, color='red')
-    _ = plt.hist(tau21(real_images[real_labels == 1]),
-                 bins=bins, histtype='step', label=r"Pythia ($W' \rightarrow WZ$)", normed=True, color='red',
-                 linestyle='dashed')
+# def tau21_dist(real_images, generated_images, outdir):
+#     ##PT
+#     fig, ax = plt.subplots(figsize=(6, 6))
+#     bins = np.linspace(0, 1, 50)
+#     _ = plt.hist(tau21(generated_images[sampled_labels == 1]),
+#                  bins=bins, histtype='step', label=r"generated ($W' \rightarrow WZ$)", normed=True, color='red')
+#     _ = plt.hist(tau21(real_images[real_labels == 1]),
+#                  bins=bins, histtype='step', label=r"Pythia ($W' \rightarrow WZ$)", normed=True, color='red',
+#                  linestyle='dashed')
+#
+#     _ = plt.hist(tau21(generated_images[sampled_labels == 0]),
+#                  bins=bins, histtype='step', label=r'generated (QCD dijets)', normed=True, color='blue')
+#     _ = plt.hist(tau21(real_images[real_labels == 0]),
+#                  bins=bins, histtype='step', label=r'Pythia (QCD dijets)', normed=True, color='blue',
+#                  linestyle='dashed')
+#     plt.xlabel(r'Discretized $p_T$ of Jet Image')
+#     plt.ylabel(r'Units normalized to unit area')
+#     plt.legend()
+#     plt.ylim(0, 6.0)
+#     # plt.savefig(os.path.join(outdir, 'tau21.pdf'))
 
-    _ = plt.hist(tau21(generated_images[sampled_labels == 0]),
-                 bins=bins, histtype='step', label=r'generated (QCD dijets)', normed=True, color='blue')
-    _ = plt.hist(tau21(real_images[real_labels == 0]),
-                 bins=bins, histtype='step', label=r'Pythia (QCD dijets)', normed=True, color='blue',
-                 linestyle='dashed')
-    plt.xlabel(r'Discretized $p_T$ of Jet Image')
-    plt.ylabel(r'Units normalized to unit area')
-    plt.legend()
-    plt.ylim(0, 6.0)
-    # plt.savefig(os.path.join(outdir, 'tau21.pdf'))
 
 def load_images(filename):
     with h5py.File(os.path.abspath(filename), 'r') as f:
@@ -249,6 +259,7 @@ def load_images(filename):
         images[images < 1e-3] = 0.0  # everything below 10^-3 is unphysical and due to instabilities in the rotation
 
     return images, labels
+
 
 def plot_diff_jet_image(
                     content,
@@ -285,7 +296,7 @@ def plot_diff_jet_image(
     plt.title(title)
     # plt.savefig(os.path.join('..', outdir, output_name))
 
-sixk = True
+sixk = False
 latent_space = 200  # size of the vector z
 if sixk:
     training_file = 'data/prepared_6k.hdf'
@@ -324,19 +335,19 @@ outdir = 'plots'
 
 ##PLOT IMAGES
 from jetimage.analysis import average_image, plot_jet
-
+#
 signal_gen = generated_images[sampled_labels == 1]
-noise_gen = generated_images[sampled_labels == 0]
-signal_real = real_images[real_labels == 1]
-noise_real = real_images[real_labels == 0]
-
-av_sig_gen = average_image(signal_gen)
-av_noise_gen = average_image(noise_gen)
-av_sig_real = average_image(signal_real)
-av_noise_real = average_image(noise_real)
+# noise_gen = generated_images[sampled_labels == 0]
+# signal_real = real_images[real_labels == 1]
+# noise_real = real_images[real_labels == 0]
+#
+# av_sig_gen = average_image(signal_gen)
+# av_noise_gen = average_image(noise_gen)
+# av_sig_real = average_image(signal_real)
+# av_noise_real = average_image(noise_real)
 #
 # for i in range(10):
-#     plot_jet(signal_gen[i])
+plot_jet(signal_gen[7])
 # plot_jet(av_sig_gen)
 # plot_jet(av_sig_gen)
 
@@ -354,8 +365,85 @@ grid = 0.5 * (np.linspace(-1.25, 1.25, 26)[:-1] + np.linspace(-1.25, 1.25, 26)[1
 eta = np.tile(grid, (25, 1))
 phi = np.tile(grid[::-1].reshape(-1, 1), (1, 25))
 
-tau21_dist(real_images, generated_images, outdir)
+# tau21_dist(real_images, generated_images, outdir)
+# f, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 4))
+
+#load 6k
+# training_file = 'data/prepared_6k.hdf'
+# generated_file = 'data/generated_01_6k.hdf'
+#
+# real_images, real_labels = load_images(training_file)
+# generated_images, sampled_labels = load_images(generated_file)
+
+#6kmass
+# plt.subplot(121)
+# mass_dist(real_images, generated_images,title='6k training set')
+#
+# #6kpt
+# pt_dist(real_images, generated_images,title='6k training set')
+
+# # load 24k
+# training_file = 'data/prepared_24k.hdf'
+# generated_file = 'data/generated_02_24k.hdf'
+# real_images, real_labels = load_images(training_file)
+# generated_images, sampled_labels = load_images(generated_file)
+#
+# 24kmass
+# plt.subplot(122)
+# mass_dist(real_images, generated_images,title='24k training set')
+#
+# # 24kpt
+# pt_dist(real_images, generated_images,title='24k training set')
+
+# bins = np.linspace(0, 1, 50)
+# plt.subplot(121)
+# _ = plt.hist(np.load('data/tau21_sig_gen_6k.npy'),
+#              bins=bins, histtype='step', label=r"generated ($W' \rightarrow WZ$)", normed=True, color='red')
+# _ = plt.hist(np.load('data/tau21_sig_real_6k.npy'),
+#              bins=bins, histtype='step', label=r"Pythia ($W' \rightarrow WZ$)", normed=True, color='red',
+#              linestyle='dashed')
+#
+# _ = plt.hist(np.load('data/tau21_noise_gen_6k.npy'),
+#              bins=bins, histtype='step', label=r'generated (QCD dijets)', normed=True, color='blue')
+# _ = plt.hist(np.load('data/tau21_noise_real_6k.npy'),
+#              bins=bins, histtype='step', label=r'Pythia (QCD dijets)', normed=True, color='blue',
+#              linestyle='dashed')
+# plt.title(r'6k training set')
+# plt.xlabel(r'Discretized $\tau_{21}$ of Jet Image')
+# plt.ylabel(r'Units normalized to unit area')
+# plt.legend()
+# plt.ylim(0, 6.0)
+#
+# plt.subplot(122)
+# _ = plt.hist(np.load('data/tau21_sig_gen_24k.npy'),
+#              bins=bins, histtype='step', label=r"generated ($W' \rightarrow WZ$)", normed=True, color='red')
+# x = np.load('data/tau21_sig_real_24k.npy')
+# _ = plt.hist(x[~np.isnan(x)],
+#              bins=bins, histtype='step', label=r"Pythia ($W' \rightarrow WZ$)", normed=True, color='red',
+#              linestyle='dashed')
+#
+# _ = plt.hist(np.load('data/tau21_noise_gen_24k.npy'),
+#              bins=bins, histtype='step', label=r'generated (QCD dijets)', normed=True, color='blue')
+# _ = plt.hist(np.load('data/tau21_noise_real_24k.npy'),
+#              bins=bins, histtype='step', label=r'Pythia (QCD dijets)', normed=True, color='blue',
+#              linestyle='dashed')
+# plt.title(r'24k training set')
+#
+# plt.xlabel(r'Discretized $\tau_{21}$ of Jet Image')
+# plt.ylabel(r'Units normalized to unit area')
+# plt.legend()
+# plt.ylim(0, 8.0)
 plt.show()
 
+##SAVE TAU21 CALCULATIONS
+# tau21_sig_gen = tau21(generated_images[sampled_labels == 1])
+# np.save('tau21_sig_gen_24k.npy', tau21_sig_gen)
+# tau21_sig_real = tau21(real_images[real_labels == 1])
+# np.save('tau21_sig_real_24k.npy', tau21_sig_real)
+# tau21_noise_gen = tau21(generated_images[sampled_labels == 0])
+# np.save('tau21_noise_gen_24k.npy', tau21_noise_gen)
+# tau21_noise_real = tau21(real_images[real_labels == 0])
+# np.save('tau21_noise_real_24k.npy', tau21_noise_real)
+##END TAU21 SAVE
 
 

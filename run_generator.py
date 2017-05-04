@@ -15,8 +15,11 @@ from docopt import docopt
 import h5py
 import numpy as np
 import os
+import time
 
 def main(n_jets, gen_weights, outfile, latent_space):
+    t0 = time.time()
+    print(t0)
     # gen_weights = 'models/weights_1_6k/params_generator_epoch_049.hdf5'
 
     from models.networks.lagan import generator as build_generator
@@ -37,7 +40,8 @@ def main(n_jets, gen_weights, outfile, latent_space):
         dset = f.create_dataset('image', data=generated_images)
         sigs = f.create_dataset('signal', data=sampled_labels)
         ##
-
+    print("Runtime for {}".format(n_jets))
+    print(time.time() - t0)
 if __name__ == '__main__':
     arguments = docopt(__doc__, help=True)
     print(arguments)

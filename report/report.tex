@@ -1,3 +1,4 @@
+% !Mode:: "TeX:UTF-8"
 \RequirePackage[l2tabu, orthodox]{nag}
 
 \documentclass{report}
@@ -11,10 +12,11 @@
 	\usepackage{url}
 	\usepackage[title]{appendix}
 	\usepackage{microtype}
-	\usepackage[colorlinks=false, pdfborder={0 0 0}]{hyperref}
+	\usepackage[colorlinks=false, pdfborder={0 0 0}, unicode=true]{hyperref}
 	
 	\usepackage[backend=bibtex,sorting=none]{biblatex}
-		\bibliography{biblo, cust} %Insert Bibliography file name
+		\addbibresource{../bib/biblo} %Insert Bibliography file name
+		\addbibresource{../bib/cust}
 		\setlength\parindent{0pt}
 	\usepackage{subcaption}
 	\usepackage{float} 
@@ -25,13 +27,13 @@
 	\usepackage[capitalise]{cleveref}
 	\usepackage{pgfgantt}
 	\usepackage{rotating}
-	
+
 	\usepackage{listings}
 	\usepackage{titling}
 	\usepackage{color}
 	\usepackage{titlesec}
-	
 		\titleformat{\chapter}{\normalfont\huge\bfseries}{\thechapter.}{20pt}{\huge}
+	\usepackage[compat=1.1.0]{tikz-feynman}
 	\definecolor{mygreen}{rgb}{0.152, 0.7, 0.375}
 	\definecolor{mygray}{rgb}{0.5,0.5,0.5}
 	\definecolor{mymauve}{rgb}{0.555, 0.266, 0.676}
@@ -57,7 +59,7 @@
 %End Document information
 
 \begin{document}
-	
+
 \begin{titlepage}
 \maketitle
 
@@ -84,28 +86,38 @@ A key part of experimental particle physics is the simulation of a detector's re
 %------------------Introduction-------------------
 \chapter{Introduction}
 
+\section{Motivation}
 Particle physics experiments involve colliding particles and measuring the properties of the objects produced. However, a given event could not only result in a variety of particle showers, but the response of the detector is also stochastic in nature. It is from this determination of track properties and object momenta that a physicist must infer the original event. Detector simulations are widely used to help with the inference by calculating what a response and output for a given event would be, and as such can be used as predictive tools for models.\\
 
-Full, accurate simulations (AS) of the progress of particles through detectors, such as the commonly used Geant 4 \cite{geant4}, can produce extremely accurate predictions of the measurements. However, they are computationally expensive. Approximate, fast simulators (FS), such as Delphes \cite{delphes}, perform cruder calculations with a significant speed gain (AS $\sim$ 10-1000s/event and FS $\sim$ 0.01-1s/event \cite{delphessl}). The accuracy-performance imbalance between these two solutions leaves room for other potential avenues. One such route is the use of machine learning tools which have shown notable promise in a large number of fields.\\
+Full, accurate simulations (AS) of the progress of particles through detectors, such as the commonly used Geant 4 \cite{geant4}, can produce extremely accurate predictions of the measurements. However, they are computationally expensive. Approximate, fast simulators (FS), such as Delphes \cite{delphes}, perform cruder calculations with a significant speed gain (AS $\sim$ 10-1000s/event and FS $\sim$ 0.01-1s/event \cite{delphessl}). The accuracy-performance imbalance between these two solutions leaves room for other potential avenues. One such route is the use of Machine Learning (ML) tools.\\
 
-Generative models attempt to learn a given probability distribution via exposure to samples, and thus accurately generate new elements of that distribution. Their capability has recently been significantly boosted by the burgeoning fields of neural networks and associated deep learning. Once the learning process is complete, such networks are demonstrably fast for appropriate usage. As such, a generative model capable of learning to simulate detector responses may strike a better performance-accuracy balance than current FS. \\
+Generative models in ML attempt to learn a given probability distribution via exposure to samples, and thus accurately generate new elements of that distribution. Their capability has recently been significantly boosted by the burgeoning fields of neural networks and associated deep learning. Once the learning process is complete, such networks are demonstrably fast for appropriate usage. As such, a generative model capable of learning to simulate detector responses may strike a better performance-accuracy balance than current FS. The ultimate goal of further work would be a generative model which approaches an FS in terms of accuracy, at significantly lower computational costs.\\
 
-This research project initially focusses on attempting a proof of this concept using Generative Adversarial Networks (GANs) \cite{gan1}. This method trains two networks simultaneously, a generative model $G$ and discriminative model $D$. As the names suggest, G generates ``fake" data which D attempts to distinguish from the ``real" training data. As each network is trained to improve at their task, they compete such that ultimately G produces new data which is indistinguishable in theory from the original distribution.\\
+\section{Existing Research}
 
-This investigation would train using simulated data from a FS, aiming to match the accuracy of said simulator while surpassing in performance. A successful demonstration merits further work to attempt closer accuracy to AS. The following section gives the relevant background on particle detectors, simulations and machine learning tools. \cref{sec:plan} outlines the project plan, including methods, challenges and tasks.
+Machine Learning has long been familiar to High Energy Physics (HEP), due to it being a highly statistical field. Recently, however, ML and associated fields have received significant research attention in computer science, technology and engineering due to increases in computing power and demonstrations of the power and versatility of such techniques. We are now beginning to see efforts towards bringing these new tools to bear in HEP.\\
 
+Generative Adversarial Networks (GANs) \cite{gan1} are a subset of generative models which have recently come to the forefront of active research. This method trains two neural networks simultaneously, a generative model $G$ and discriminative model $D$. As the names suggest, G generates ``fake" data which D attempts to distinguish from the ``real" training data. As each network is trained to improve at their task, they compete such that ultimately G produces new data which is indistinguishable in theory from the original distribution. GANs have shown strong performance in generating and manipulating photo-realistic images [CITE GAN PICS, IG Review].\\
+
+Jets from boosted particles is an active research field [REFERENCES], and where many ML tools are used.  This project focusses on work done using jet-images produced from jet energy deposits [JIMAGE REFS], particularly boosted jet identification [CITE IDEN]. Earlier this year, GANs were trained on jet-images generated from Pythia output (hadronisation and parton showers \cite{pythia}) and showed promise in replicating physical distributions \cite{de2017learning}. This represents an initial foray in to using generative models for HEP. Recent work has also demonstrated classification of jets using ML techniques from natural language processing \cite{louppe2017qcd}.
+
+\section{Report outline}
+
+This report details an application of GAN based learning to jet-images from Delphes (FS) output, building on the work of Oliveira et al. \cite{de2017learning} who demonstrated the principle for Pythia data. Jet-images were produced and pre-processed from Delphes output files, then used as training data for a GAN architecture. The trained network was then used to generate ``fake" images. The quality of this output was assessed by comparison to the training set. \\
+
+The following chapter outlines the theoretical background of GANs and the boosted jet process considered. \Cref{sec:methods} describes the methods employed, and \cref{sec:results} presents and discusses the outcomes of the training process. Final conclusions are presented in \cref{sec:conclusions}.
+	 
 %------------------Theory-------------------
-\section{Background}
-\label{sec:background}
+\chapter{Theoretical Background}
+\label{sec:theory}
 
 
-
-\subsection{Detectors \& Simulations}
+\section{Detectors \& Simulations}
 \label{sec:detector}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\linewidth]{img/atlasdetector}
+	\includegraphics[width=0.8\linewidth]{atlasdetector}
 	
 	\caption{Cutaway diagram showing components of ATLAS detector. Source: \cite{atlaspic}}
 	\label{fig:atlaspic}
@@ -119,13 +131,13 @@ Modern particle detectors are a complex set of measurement systems working in un
 
 The response of a detector to a particular particle event is therefore non-trivial to predict, particularly due to the high degree of stochastic variation between any two measurements. A significant difficulty faced by LHC experiments is the jets of hadronisation produced by quarks or gluons, as only the final branches of the jets are measured by the calorimeters. Without an understanding of this response, however, a physicist cannot infer the event that took place, or indeed make predictions about measurements that will be made. It is in this arena that simulations of detector behaviour are crucial. \\
 
-\cref{fig:simdiag} outlines a typical simulation sequence. The first step in the process is a matrix element calculator, which for this investigation is the commonly used MadGraph5 \cite{madgraph}. This piece of software loads a given model (particles and interactions), and calculates all the tree-level diagrams which take the given initial particles to the final particles. Using this information, Monte-Carlo methods are used to calculate the matrix element using a given number of events. Next, an event generator, Pythia for our case, calculates the subsequent interactions, decays parton showers and hadronisation \cite{Gieseke2012}.\\
+\cref{fig:simdiag} outlines a typical simulation sequence. The first step in the process is a matrix element calculator, which for this investigation is the commonly used MadGraph5 \cite{madgraph}. This piece of software loads a given model (particles and interactions), and calculates all the tree-level diagrams which take the given initial particles to the final particles. Using this information, Monte-Carlo methods are used to calculate the matrix element using a given number of events. Next, an event generator, Pythia for our case, calculates the subsequent interactions, decays parton showers and performs hadronisation \cite{Gieseke2012}.\\
 
 The results of this are the``truth events", which for our purposes is the input, $\mathbf{x}$, to any simulator under consideration. The simulator performs two key tasks, that of calculating the response of the detector as the particles travel through it, and reconstructing the underlying events from such information. The reconstruction step is performed in much the same way as actual experiments, so is a useful representation of the simulated results.        
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\linewidth]{img/simdiag}
+	\includegraphics[width=0.8\linewidth]{simdiag}
 	
 	\caption{Summary of simulation process, from matrix element generation to final reconstruction from detector response.}
 	\label{fig:simdiag}
@@ -133,20 +145,20 @@ The results of this are the``truth events", which for our purposes is the input,
 \end{figure}	
 
 
-An AS then propagates the input through a detailed model of the detectors to calculate the response. Delphes, the FS under consideration, takes a modular approach by separating the various components of the detector and performing approximate calculation and addition of stochasticity at each stage. Details of this can be found in \cite{delphes}. A measure of the performance of various parts can be seen in \cref{fig:delphescpu}. The FastJet jet propagation \cite{fastjet} is by far the slowest, especially at high pile-up (multiple simultaneous proton-proton interactions \cite{marshall}). Any performance improvements are likely to arise from better execution of this step. \\ 
+An AS then propagates the input through a detailed model of the detectors to calculate the response. Delphes, the FS under consideration, takes a modular approach by separating the various components of the detector and performing approximate calculation and addition of stochasticity at each stage. Details of this can be found in \cite{delphes}, a summary is shown in \cref{fig:delphes}.  \\ 
 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{img/delphescpu}
+	\includegraphics[width=0.7\linewidth]{delphes}
 	
-	\caption{Performance of Delphes modules at 0 and 50 pile-up. FastJet jet propagation algorithm is seen to be most costly, especially at high pile-up. Source: \cite{delphes}}
-	\label{fig:delphescpu}
+	\caption{Summary of Delphes modules and function. Source: \cite{delphesslid}}
+	\label{fig:delphes}
 	
 \end{figure}
 
  
-\subsection{Machine Learning}
+\section{Generative Adversarial Networks}
 \label{sec:ml}
 
 Traditional and well developed machine learning can be understood very much in parallel with the Bayesian methods of experimental physics. We attempt to determine the most likely parameters, $\theta$, for a given model, $\mathcal{M}$, for measurements $y$. This probability, $p(\theta|y, \mathcal{M})$, is the posterior. It is usually done by maximising the likelihood (probability of data given parameters) \cite{data}:
@@ -159,52 +171,92 @@ In machine learning, computers perform this task using training data to learn th
 
 More recent developments have made significant inroads into \textit{generative} models, wherein learning is done in order to produce new samples of data. In particular neural networks and deep learning have played a large role, as neural networks scale well with dimensions, are end-to-end differentiable (crucial for gradient based training) and can represent complex functions \cite{deepgen}.\\
 
-Generative Adversarial Nets (GANs), proposed by Goodfellow et al. \cite{gan1} have proven very successful in areas such as image generation and text to image synthesis \cites{radford}{text2im}. More recently, it has been shown that GANs can be used to generate particle shower shape data \cite{louppe}, which is promising for our goals. \\
+%here is where GAN lit review needs to go.
 
-Basic GANs consist of two competing networks $G$ and $D$. $G$ takes a latent noise variable $z$ as input and outputs artificial data $\mathbf{y} = G(z;\theta_g)$, where $\theta_g$ are the parameters of the network. $D$ takes either real or artificial data as input and outputs a scalar, $D(\mathbf{y})$, corresponding to the probability that $\mathbf{y}$ is real. $G$ is trained to improve at fooling $D$ and $D$ is trained to improve at distinguishing real data from generated. This can be described by a min-max game with value function $V(G,D)$:
+In the simplest case GANs consist of two competing networks $G$ and $D$. $G$ takes a latent noise variable $z$ as input and outputs artificial data $\mathbf{y} = G(z;\theta_g)$, where $\theta_g$ are the parameters of the network. $D$ takes either real or artificial data as input and outputs a scalar, $D(\mathbf{y})$, corresponding to the probability that $\mathbf{y}$ is real. $G$ is trained to improve at fooling $D$ and $D$ is trained to improve at distinguishing real data from generated. This can be described by a min-max game with value function $V(G,D)$:
 
 \begin{equation}
 	\label{eq:minmax}
-	\min_{G}\max_{D}V(D,G) = \mathbb{E}_{\mathbf{y}\sim p_{\text{data}}(\mathbf{y})} [\log(D(\mathbf{y})] + \mathbb{E}_{\mathbf{z}\sim p_{z}} [\log(1-D(G(z)))] 
+	\min_{G}\max_{D}V(D,G) = \mathbb{E}_{\mathbf{y}\sim p_{\text{data}}(\mathbf{y})} [\log(D(\mathbf{y})] + \mathbb{E}_{\mathbf{z}\sim p_{z}} [\log(1-D(G(z)))], 
 \end{equation} 
 
 where  $\mathbb{E}_{\mathbf{y}\sim p_{\text{data}}(\mathbf{y})}$ expresses expectation over the data probability distribution.  \\
 
-It can be shown that there exists a unique solution to this, a saddle point, strictly when $p_{\text{data}} = p_G$, where $p_G$ is the distribution produced by $G$. This theoretical guarantee is a key advantage of GANs, as well as the ability to train them using standard back propagation algorithms and the lack of Markov Chains which are often needed in other generative models.   
+It can be shown that there exists a unique solution to this, a saddle point, strictly when $p_{\text{data}} = p_G$, where $p_G$ is the distribution produced by $G$ \cite{gan1}. This theoretical guarantee is a key advantage of GANs, as well as the ability to train them using standard back propagation algorithms and the lack of Markov Chains which are often needed in other generative models. By modifying the parameters to bring the system closer to this optimum (training, e.g. by a gradient descent method such as ADAM \cite{adam}), we achieve a successful data generation scheme.    
+
+\section{Boosted Jets}
+
+The LHC has been able to probe unprecedented energy scales, especially with the upgrade to \SI{13}{\tera\electronvolt} operation. For the first time, large numbers of massive particles (i.e. W, Z, top quark, Higgs boson) are being produced with transverse momenta $p_T$ considerably larger than their rest mass $m$. These produce broad high energy jets, which are not easily identified using classical jet processing techniques \cite{BOOST}. As these \textit{boosted} objects may also include contributing effects from physics beyond the standard model, there is considerable active study in this area. \\ [MORE PHYSICS AND EQUATIONS]
+
+The process considered in this investigation is the decay of a W' boson, which, along with Z', are massive gauge bosons which arise in extensions to electroweak theory. The simplest example of which is imposing an extra $SU(2)$ symmetry, i.e. $SU(2)_1 \times SU(2)_2 \times U(1)$, which gets spontaneously broken resulting in the standard electroweak $SU(2)$ \cite{pdg2012}. These particles are predicted to have masses on the order of \si{\tera\electronvolt}. The decay sequence imposed in this project is given by the Feynman diagrams in \cref{fig:feynmans}.
+
+
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}[t]{0.3\linewidth}
+			\centering
+			\feynmandiagram [horizontal=a to b] {
+				i1 [particle=\(f\)] -- [fermion] a -- [fermion] i2 [particle=\(\bar{f}\)],
+				a -- [photon, edge label=\(W'\)] b,
+				f1 [particle=\(W\)] -- [photon] b -- [photon] f2 [particle=\(Z\)],
+			};
+		\end{subfigure}%
+		~ 
+		\begin{subfigure}[t]{0.3\linewidth}
+			\centering
+			\feynmandiagram [horizontal=a to t1, small] {
+				a [particle=\(W\)] -- [photon] t1,
+				t1 -- [photon] p1 [particle=\(q\)],
+				t1 -- [photon] p2 [particle=\(q'\)],
+			};
+		\end{subfigure}
+		~
+		\begin{subfigure}[t]{0.3\linewidth}
+			\centering
+			\feynmandiagram [horizontal=a to t1, small] {
+				a [particle=\(Z\)] -- [photon] t1,
+				t1 -- [photon] p1 [particle=\(\nu\)],
+				t1 -- [photon] p2 [particle=\(\bar{\nu}\)],
+			};
+		\end{subfigure}
+	\caption{Fermion annihilation produces W' decaying to boosted W and Z.}
+	\label{fig:feynmans}
+	\end{figure}
+
+The decay of the massive W' means the W is highly boosted, and decays to quarks producing a boosted jet. By forcing the Z boson to decay to neutrinos, we ensure it does not complicate our signal.
+
 
 
 %------------------Method-------------------
 
-\section{Project Plan}
-\label{sec:plan}
 
 
-\subsection{Method}
-This project aims to apply machine learning methods to simulate particle detectors, beginning with GANs. The first key step is to understand and transform the event into a suitable input for the neural network. Similarly, the reconstructed output of Delphes must be reduced to the crucial parts that $G$ will need to replicate. This is important as the size of the output scales with event number, so could be typically 100s of megabytes, which is large compared to the image file sizes that GANs have mainly been tested on.\\
+\chapter{Methods}
+\label{sec:methods}
 
-A key difference between basic GANs and this case is the requirement that the output $\mathbf{y}$ of $G$ match a given input $\mathbf{x}$. $G$ and $D$ must therefore be conditional on the event input. Such conditional use of GANs has been demonstrated \cite{mirza2014conditional}, and it can be shown that a simple modification of \cref{eq:minmax} is sufficient:
+\section{Jet-images}
+\subsection{Calorimeter to image}
 
-\[
- \min_{G}\max_{D}V(D,G) = \mathbb{E}_{\mathbf{y}\sim p_{\text{data}}(\mathbf{y})} [\log(D(\mathbf{y|x})] + \mathbb{E}_{\mathbf{z}\sim p_{z}} [\log(1-D(G(z|\mathbf{x})))] 
-\]
+\subsection{Pre-processing}
 
-Furthermore, appending $\mathbf{x}$ to the input for each net is enough to achieve this. \cref{fig:mldiag} shows this set up.
+\section{GAN}
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.6\linewidth]{img/mldiag}
-	
-	\caption{Schematic of simulation and neural net based generation of data.}
-	\label{fig:mldiag}
-	
-\end{figure}
+\subsection{Architecture}
 
+\subsection{Training}
 
-Initially training will take place with one or a few simple events (e.g. just one or two particles) as input. Eventually the simulation must be made capable of being conditional on any event input.\\
+\chapter{Results and Discussion}
+\label{sec:results}
+\section{Images}
 
-The project will be implemented in Python 2.7, with the associated scientific packages numpy, scipy and matplotlib. The package theano \cite{theano} will be used for optimized calculation and symbolic manipulation, primarily due to its compatibility and support for GPUs, which significantly boost neural net performance. Keras \cite{keras} is a package that simplifies machine learning actions and works on top of theano; it will be the main tool used for constructing the networks and training. The training algorithm will likely be a form of stochastic gradient descent such as ADAM \cite{adam}\\
+\section{Physical Distributions}
 
+\section{Computational advantage}
 
+\section{Future Work}
+
+\chapter{Conclusions}
+\label{sec:conclusions}
 %------------------References-------------------
 \printbibliography
 
