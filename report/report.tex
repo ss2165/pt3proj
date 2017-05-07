@@ -4,6 +4,7 @@
 \documentclass{report}
 
 	\usepackage[a4paper]{geometry}
+	\usepackage[english]{isodate}
 	\usepackage{fullpage}
 	\usepackage{graphicx}
 		\graphicspath{{../fig/}}
@@ -33,7 +34,9 @@
 	\usepackage{color}
 	\usepackage{titlesec}
 		\titleformat{\chapter}{\normalfont\huge\bfseries}{\thechapter.}{20pt}{\huge}
+
 	\usepackage[compat=1.1.0]{tikz-feynman}
+
 	\definecolor{mygreen}{rgb}{0.152, 0.7, 0.375}
 	\definecolor{mygray}{rgb}{0.5,0.5,0.5}
 	\definecolor{mymauve}{rgb}{0.555, 0.266, 0.676}
@@ -46,15 +49,18 @@
 	\vskip0.5em}%
 }
 \newcommand{\pkg}[1]{\textsc{#1}}
+\newcommand{\pythia}{\pkg{Pythia}}
+\newcommand{\delphes}{\pkg{Delphes}}
 %Document information
 
 \title{Machine Learning based Simulation of Particle Physics Detectors}
 
 \subtitle{Part III Project Report}
 %\author{Seyon \textsc{Sivarajah}, Churchill College, ss2165}
-\author{Candidate Number: }
+\author{Candidate Number: \\
+Supervisor: Dr. Christopher \textsc{Lester}}
 
-\date{\today}
+\date{\printdate{2017-05-15}}
 
 %End Document information
 
@@ -194,7 +200,9 @@ It can be shown that there exists a unique solution to this, a saddle point, str
 
 \section{Boosted Jets}
 
-The LHC has been able to probe unprecedented energy scales, especially with the upgrade to \SI{13}{\tera\electronvolt} operation. For the first time, large numbers of massive particles (i.e. W, Z, top quark, Higgs boson) are being produced with transverse momenta $p_T$ considerably larger than their rest mass $m$. These produce broad high energy jets, which are not easily identified using classical jet processing techniques \cite{BOOST}. As these \textit{boosted} objects may also include contributing effects from physics beyond the standard model, there is considerable active study in this area. (MORE PHYSICS AND EQUATIONS) \\
+The LHC has been able to probe unprecedented energy scales, especially with the upgrade to \SI{13}{\tera\electronvolt} operation. For the first time, large numbers of massive particles (i.e. W, Z, top quark, Higgs boson) are being produced with transverse momenta $p_T$ considerably larger than their rest mass $m$. Traditional reconstruction techniques identify all the decay products of such objects as a single jet, making distinguishing such jets from the large background of QCD jets a prominent problem \cite{BOOST}. As these \textit{boosted} objects may also include contributing effects from physics beyond the standard model, there is considerable active study in this area. (MORE PHYSICS AND EQUATIONS) \\
+
+Modern methods probe individual jets and their detailed substructure for identification and tagging. A key property is the number of hard `prongs' in a jet. Electroweak boosted objects (W/Z/H) produce two prongs, while a boosted top quark produce three \cite{nsubjettiness}. Background QCD processes only lead to a single hard prong \cite{prongs}.\\
 
 The process considered in this investigation is the decay of a W' boson, which, along with Z', are massive gauge bosons which arise in extensions to electroweak theory. The simplest example of which is imposing an extra $SU(2)$ symmetry, i.e. $SU(2)_1 \times SU(2)_2 \times U(1)$, which gets spontaneously broken resulting in the standard electroweak $SU(2)$ \cite{pdg2012}. These particles are predicted to have masses on the order of \si{\tera\electronvolt}. The decay sequence imposed in this project is given by the Feynman diagrams in \cref{fig:feynmans}.
 
@@ -229,7 +237,7 @@ The process considered in this investigation is the decay of a W' boson, which, 
 	\label{fig:feynmans}
 	\end{figure}
 
-The decay of the massive W' means the W is highly boosted, and decays to quarks producing a boosted jet. By forcing the Z boson to decay to neutrinos, we ensure it does not complicate our signal, it decays ``silently".
+The decay of the massive W' means the W is highly boosted, and decays to quarks producing a boosted jet. By forcing the Z boson to decay to neutrinos, we ensure it does not complicate our signal, it decays ``silently". The boosted W is expected to produce a two-pronged pattern. This study contrasts this process with background QCD jets.
  
 
 
@@ -303,9 +311,9 @@ All jet-image generation is performed using Python v2.7, using \pkg{PyROOT} (the
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.5\linewidth]{ex_sig_real}
+	\includegraphics[width=0.7\linewidth]{ex_sig_real}
 	
-	\caption{Sample jet-image from \pkg{Pythia} + \pkg{Delphes} data after pre-processing. High intensity centre (leading sub-jet) and sub-leading sub0jet directly beneath are seen. Pixel values are plotted on a log scale.}
+	\caption{Sample jet-image from \pkg{Pythia} + \pkg{Delphes} data after pre-processing. High intensity centre (leading sub-jet) and sub-leading sub-jet directly beneath are seen. Pixel values are plotted on a log scale.}
 	\label{fig:ex_sig_real}
 	
 \end{figure}
@@ -329,16 +337,74 @@ An auxiliary classification task for the discriminator, as described in the ACGA
 \end{figure}   
 
 \subsection{Training}
-Training was performed with gradient descent using the ADAM \cite{adam} optimiser. The noise variable input to the discriminator was a normally distributed vector of length 200, with 0 mean and a standard deviation of 1. Training was performed on batches of 100 images at a time, for 50 epochs (total runs of training over the whole dataset). Models were built using \pkg{Keras} v1.2 \cite{keras} with a \pkg{Tensorflow} v0.11 \cite{tensorflow} backend. 
+Training was performed with gradient descent using the ADAM \cite{adam} optimiser. The noise variable input to the discriminator was a normally distributed vector of length 200, with 0 mean and a standard deviation of 1. Training was performed on batches of 100 images at a time, for 50 epochs (total runs of training over the whole dataset). Models were built and trained using \pkg{Keras} v1.2 \cite{keras} with a \pkg{Tensorflow} v0.11 \cite{tensorflow} backend. 
 
 \chapter{Results and Discussion}
 \label{sec:results}
-\section{Images}
+\section{Delphes jet-images}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[t]{1.0\linewidth}
+		\centering
+		\includegraphics[width=1\linewidth]{av_PvPD_sig}
+		\caption{W' signal}
+	\end{subfigure}%
+	\\
+	\begin{subfigure}[t]{1.0\linewidth}
+		\centering
+		\includegraphics[width=1\linewidth]{av_PvPD_noise}
+		\caption{QCD noise}
+	\end{subfigure}
+
+	\caption{Comparison of average jet-images between those generated from just \pkg{Pythia} (P, left) and those also generated with \pkg{Delphes} (PD, right) on a log scale. The difference between the two images (P - PD on a pixel by pixel basis) is shown in the middle on a linear scale, with the colour map clipped to $\pm$\SI{20}{\giga\electronvolt} to aid visibility. Images for the W' signal (top) and QCD noise (bottom) are shown. \pkg{Pythia} only images from Ref. \cite{de2017learning}. }
+	\label{fig:delphes_ims}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\linewidth]{av_PvPD_center}
+	
+	\caption{Pixel values for $\eta=0$ axis from average jet-images (over \num{12500} images)  for W' signal (left) and QCD noise (right), i.e. the average values of the signal axis.}
+	\label{fig:delphes_middle}
+	
+\end{figure} 
+
+\section{Generated Images}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[t]{1.0\linewidth}
+		\centering
+		\includegraphics[width=1\linewidth]{av_GvPD_sig}
+		\caption{W' signal}
+	\end{subfigure}%
+	\\
+	\begin{subfigure}[t]{1.0\linewidth}
+		\centering
+		\includegraphics[width=1\linewidth]{av_GvPD_noise}
+		\caption{QCD noise}
+	\end{subfigure}
+	
+	\caption{Comparison of average jet-images (over \num{12500} images) between training data (PD, left) and those from the trained Generator (G), on a log scale. The difference between the two images (PD - G) is shown in the middle on a linear scale. Images for the W' signal (top) and QCD noise (bottom) are shown.}
+	\label{fig:pdvg}
+\end{figure}
 
 \section{Physical Distributions}
 
 \section{Computational advantage}
-
+\begin{table}[H]
+	\centering
+	\begin{tabular}{cc}
+		\toprule Method  & Number of Events / \si{\second} \\
+		\midrule \pythia+\delphes  & 41\\
+		\midrule Generator  & 446\\
+		
+		\bottomrule
+	\end{tabular}
+	\caption{Comparison of events/images generated per second for \pkg{Pythia}+\pkg{Delphes} system and trained LAGAN Generator.}
+\end{table}
+	
 \section{Future Work}
 
 \chapter{Conclusions}

@@ -335,7 +335,8 @@ def plot_diff_jet_image(
     im = ax.imshow(content,
                    interpolation='nearest', norm=Normalize(vmin=-extr, vmax=+extr), extent=extent,
                    cmap=cmap)
-    plt.colorbar(im, fraction=0.05, pad=0.05)
+    cbar = plt.colorbar(im, fraction=0.05, pad=0.05)
+    cbar.set_label(r'(PD - G) $p_T$ (GeV)', y=0.7)
     plt.xlabel(r'[Transformed] Pseudorapidity $(\eta)$')
     plt.ylabel(r'[Transformed] Azimuthal Angle $(\phi)$')
     plt.title(title)
@@ -402,8 +403,8 @@ else:
     gen_weights = 'models/weights_2_24k/params_generator_epoch_049.hdf5'
     disc_weights = 'models/weights_2_24k/params_discriminator_epoch_049.hdf5'
 
-# real_images, real_labels = load_images(training_file)
-# generated_images, sampled_labels = load_images(generated_file)
+real_images, real_labels = load_images(training_file)
+generated_images, sampled_labels = load_images(generated_file)
 
 # from models.networks.lagan import generator as build_generator
 # g = build_generator(latent_space, return_intermediate=False)
@@ -418,30 +419,29 @@ else:
 
 ##PLOT IMAGES
 #
-# signal_gen = generated_images[sampled_labels == 1]
-# noise_gen = generated_images[sampled_labels == 0]
-# signal_real = real_images[real_labels == 1]
-# noise_real = real_images[real_labels == 0]
-#
-# av_sig_gen = average_image(signal_gen)
-# av_noise_gen = average_image(noise_gen)
-# av_sig_real = average_image(signal_real)
-# av_noise_real = average_image(noise_real)
-#
-# for i in range(10):
-# plot_jet(signal_gen[7])
-# plot_jet(av_sig_gen)
-# plot_jet(av_sig_gen)
+signal_gen = generated_images[sampled_labels == 1]
+noise_gen = generated_images[sampled_labels == 0]
+signal_real = real_images[real_labels == 1]
+noise_real = real_images[real_labels == 0]
 
-# plot_jet(
-#     generated_images.mean(axis=0),
-#     title='Average generated image'
-# )
-# -- plot the difference between the mean Pythia image and the mean GAN image
-# In this case, the green pixels are more strongly activated in GAN images than in Pythia images.
-# The purple pixels are more strongly activated in Pythia images than GAN images.
-# plot_diff_jet_image(real_images.mean(axis=0) - generated_images.mean(axis=0),
-#     title='Difference between average P+D image \n and average generated image',)
+av_sig_gen = average_image(signal_gen)
+av_noise_gen = average_image(noise_gen)
+av_sig_real = average_image(signal_real)
+av_noise_real = average_image(noise_real)
+
+##PLOTTING AVERAGES
+av_p = av_noise_real
+av_d = av_noise_gen
+
+f, ax  = plt.subplots(1, 3, figsize=(10, 4))
+
+plt.subplot(131)
+plot_jet(av_p, title='Pythia+Delphes')
+plt.subplot(132)
+plot_diff_jet_image(av_p- av_d, title='Difference')
+
+plt.subplot(133)
+plot_jet(av_d, title='Generator')
 
 
 
@@ -513,7 +513,8 @@ else:
 # plt.ylabel(r'Units normalized to unit area')
 # plt.legend()
 # plt.ylim(0, 8.0)
-# plt.show()
+
+plt.show()
 
 ##SAVE TAU21 CALCULATIONS
 # tau21_sig_gen = tau21(generated_images[sampled_labels == 1])
