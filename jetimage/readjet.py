@@ -98,7 +98,7 @@ class RootEvents:
 
             #take leading jet and its subjets
             j = bjet.At(0)
-            if ptmin <= j.PT <= ptmax and mass_min<=j.Mass<=mass_max:
+            if ptmin <= j.PT <= ptmax and mass_min <= j.Mass <= mass_max:
                 self.events.append(Jet(j, subjets))
 
     def extract_subjets(self, fname):

@@ -14,6 +14,51 @@ import h5py
 # Set Latex font for figures
 plt.rc('text', usetex=True)
 plt.rc('font', family='serif')
+
+#TODO get rid of plot_jet and average_image
+
+
+def plot_jet(image_array, etaran=(-1.25,1.25), phiran=(-1.25,1.25), output_name=None, vmin=1e-6, vmax=300, title=''):
+    """
+        Adapted from Luke de Oliveira, & Michela Paganini. (2017). lukedeo/adversarial-jets: Initial Release [Data set]. Zenodo. http://doi.org/10.5281/zenodo.400708
+        Function to help you visualize a jet image on a log scale
+        Args:
+        -----
+           content : numpy array of dimensions 25x25, first arg to imshow, content of the image
+                     e.g.: generated_images.mean(axis=0) --> the average generated image
+                           real_images.mean(axis=0) --> the average Pythia image
+                           generated_images[aux_out == 1].mean(axis=0) --> the average generated image labeled as real by the discriminator
+                           etc...
+           output_name : string, name of the output file where the plot will be saved. Note: it will be located in ../plots/
+           vmin : (default = 1e-6) float, lower bound of the pixel intensity scale before saturation
+           vmax : (default = 300) float, upper bound of the pixel intensity scale before saturation
+           title : (default = '') string, title of the plot, to be displayed on top of the image
+        Outputs:
+        --------
+           no function returns
+           saves file in ../plots/output_name
+        """
+    # fig, ax = plt.subplots(figsize=(6, 6))
+    ax = plt.gca()
+    extent = phiran + etaran
+    im = ax.imshow(image_array, interpolation='nearest', norm=LogNorm(vmin=vmin, vmax=vmax), extent=extent, cmap='jet')
+    cbar = plt.colorbar(im, fraction=0.05, pad=0.05)
+    cbar.set_label(r'Pixel $p_T$ (GeV)', y=0.85)
+    plt.xlabel(r'[Transformed] Pseudorapidity $(\eta)$')
+    plt.ylabel(r'[Transformed] Azimuthal Angle $(\phi)$')
+    plt.title(title)
+    # if output_name is None:
+    #     plt.show()
+    # else:
+    #     plt.savefig(output_name)
+
+
+def average_image(images_array):
+    #avereage image from array of images
+    return np.mean(images_array, axis=0)
+
+
+
 def discrete_mass(jet_image):
     '''
     Calculates the jet mass from a pixelated jet image
@@ -283,7 +328,7 @@ def plot_diff_jet_image(
        no function returns
        saves file in ../plots/output_name
     '''
-    fig, ax = plt.subplots(figsize=(6, 6))
+    ax = plt.gca()  # fig, ax = plt.subplots(figsize=(6, 6))
     extent=[-1.25, 1.25, -1.25, 1.25]
     if extr == None:
         extr = max( abs(content.min()), abs(content.max()))
@@ -296,6 +341,46 @@ def plot_diff_jet_image(
     plt.title(title)
     # plt.savefig(os.path.join('..', outdir, output_name))
 
+
+def plot_diff_jet_image_log(
+                    content,
+                    output_name=None,
+                    extr=None,
+                    title='',
+                    cmap='PiYG'):
+    '''
+    Function to help you visualize the difference between two sets of jet images on a linear scale
+    Args:
+    -----
+       content : numpy array of dimensions 25x25, first arg to imshow, content of the image
+                 e.g.: generated_images.mean(axis=0) - real_images.mean(axis=0) --> difference between avg generated and avg Pythia image
+                       etc...
+       output_name : string, name of the output file where the plot will be saved. Note: it will be located in ../plots/
+       extr : (default = None) float, magnitude of the upper and lower bounds of the pixel intensity scale before saturation (symmetric around 0)
+       title : (default = '') string, title of the plot, to be displayed on top of the image
+       cmap : (default = matplotlib.cm.PRGn_r) matplotlib colormap, ideally white in the middle
+    Outputs:
+    --------
+       no function returns
+       saves file in ../plots/output_name
+    '''
+    fig, ax = plt.subplots(figsize=(6, 6))
+    extent = [-1.25, 1.25, -1.25, 1.25]
+    content = content + np.min(content)
+    if extr == None:
+        extr = max( abs(content.min()), abs(content.max()))
+    im = ax.imshow(content,
+                   interpolation='nearest', norm=LogNorm(), extent=extent)
+    plt.colorbar(im, fraction=0.05, pad=0.05)
+    plt.xlabel(r'[Transformed] Pseudorapidity $(\eta)$')
+    plt.ylabel(r'[Transformed] Azimuthal Angle $(\phi)$')
+    plt.title(title)
+    # plt.savefig(os.path.join('..', outdir, output_name))
+
+grid = 0.5 * (np.linspace(-1.25, 1.25, 26)[:-1] + np.linspace(-1.25, 1.25, 26)[1:])
+eta = np.tile(grid, (25, 1))
+phi = np.tile(grid[::-1].reshape(-1, 1), (1, 25))
+
 sixk = False
 latent_space = 200  # size of the vector z
 if sixk:
@@ -305,7 +390,7 @@ if sixk:
     n_jets = 60000
 
     gen_weights = 'models/weights_1_6k/params_generator_epoch_049.hdf5'
-    disc_weights = 'models/params_discriminator_epoch_049.hdf5'
+    disc_weights = 'models/weights_1_6k/params_discriminator_epoch_049.hdf5'
 
 else:
     training_file = 'data/prepared_24k.hdf'
@@ -317,10 +402,8 @@ else:
     gen_weights = 'models/weights_2_24k/params_generator_epoch_049.hdf5'
     disc_weights = 'models/weights_2_24k/params_discriminator_epoch_049.hdf5'
 
-real_images, real_labels = load_images(training_file)
-generated_images, sampled_labels = load_images(generated_file)
-
-outdir = 'plots'
+# real_images, real_labels = load_images(training_file)
+# generated_images, sampled_labels = load_images(generated_file)
 
 # from models.networks.lagan import generator as build_generator
 # g = build_generator(latent_space, return_intermediate=False)
@@ -334,9 +417,8 @@ outdir = 'plots'
 # generated_images = np.squeeze(generated_images)
 
 ##PLOT IMAGES
-from jetimage.analysis import average_image, plot_jet
 #
-signal_gen = generated_images[sampled_labels == 1]
+# signal_gen = generated_images[sampled_labels == 1]
 # noise_gen = generated_images[sampled_labels == 0]
 # signal_real = real_images[real_labels == 1]
 # noise_real = real_images[real_labels == 0]
@@ -347,7 +429,7 @@ signal_gen = generated_images[sampled_labels == 1]
 # av_noise_real = average_image(noise_real)
 #
 # for i in range(10):
-plot_jet(signal_gen[7])
+# plot_jet(signal_gen[7])
 # plot_jet(av_sig_gen)
 # plot_jet(av_sig_gen)
 
@@ -361,9 +443,7 @@ plot_jet(signal_gen[7])
 # plot_diff_jet_image(real_images.mean(axis=0) - generated_images.mean(axis=0),
 #     title='Difference between average P+D image \n and average generated image',)
 
-grid = 0.5 * (np.linspace(-1.25, 1.25, 26)[:-1] + np.linspace(-1.25, 1.25, 26)[1:])
-eta = np.tile(grid, (25, 1))
-phi = np.tile(grid[::-1].reshape(-1, 1), (1, 25))
+
 
 # tau21_dist(real_images, generated_images, outdir)
 # f, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 4))
@@ -433,7 +513,7 @@ phi = np.tile(grid[::-1].reshape(-1, 1), (1, 25))
 # plt.ylabel(r'Units normalized to unit area')
 # plt.legend()
 # plt.ylim(0, 8.0)
-plt.show()
+# plt.show()
 
 ##SAVE TAU21 CALCULATIONS
 # tau21_sig_gen = tau21(generated_images[sampled_labels == 1])

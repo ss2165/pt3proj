@@ -1,4 +1,3 @@
-#!/usera/ss2165/anaconda2/bin/python
 """Usage:
     pythia_card.py <process> <file_name> <n_events> [-s=SEED] [--boson-mass=BOSON_MASS] [--pt-hat-min=PTHMIN] [--pt-hat-max=PTHMAX]
 
@@ -56,7 +55,7 @@ pythia_card = path.abspath('/usera/ss2165/tmp/tmppythcard.cmnd')
 with open(pythia_card, "w") as f:
     f.writelines(lines)
 
-delphes_card = path.abspath(path.join(home,'pt3proj/configs/ATLAS_me.tcl'))
+delphes_card = path.abspath(path.join(home, 'pt3proj/configs/ATLAS_me.tcl'))
 # remove(fname)
 shell_command = ['DelphesPythia8', delphes_card, pythia_card, fname]
 # proc = subprocess.Popen(shell_command, stdout=subprocess.PIPE)
