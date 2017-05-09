@@ -2,18 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e9a50a28-b23e-4c21-aa81-b7d18461a61b" name="Default" comment="added">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/check_blur.py" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ext/adversarial-jets/models/networks/__init__.py" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ext/adversarial-jets/models/networks/dcgan.py" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ext/adversarial-jets/models/networks/fcn.py" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ext/adversarial-jets/models/networks/hybrid.py" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ext/adversarial-jets/models/networks/lagan.py" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ext/adversarial-jets/models/networks/ops.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/plots/__init__.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/plots.py" afterPath="$PROJECT_DIR$/plots/plot_tools.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/jetimage/pythia_card.py" afterPath="$PROJECT_DIR$/jetimage/run_delphes.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jetimage/pythia_card.py" afterPath="$PROJECT_DIR$/jetimage/pythia_card.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jetimage/readjet.py" afterPath="$PROJECT_DIR$/jetimage/readjet.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bigdatarun.py" afterPath="$PROJECT_DIR$/bigdatarun.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plots/plot_tools.py" afterPath="$PROJECT_DIR$/plots/plot_tools.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/report/report.tex" afterPath="$PROJECT_DIR$/report/report.tex" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train/networks/lagan.py" afterPath="$PROJECT_DIR$/train/networks/lagan.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train/networks/ops.py" afterPath="$PROJECT_DIR$/train/networks/ops.py" />
@@ -28,9 +26,9 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/pt3proj$test.coverage" NAME="test Coverage Results" MODIFIED="1492508451421" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/pt3proj$plots.coverage" NAME="plots Coverage Results" MODIFIED="1494081610487" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pt3proj$plots.coverage" NAME="plots Coverage Results" MODIFIED="1494281413571" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/pt3proj$train__1_.coverage" NAME="train (1) Coverage Results" MODIFIED="1492508436385" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ext/adversarial-jets/models" />
-    <SUITE FILE_PATH="coverage/pt3proj$check_blur.coverage" NAME="check_blur Coverage Results" MODIFIED="1494146486591" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pt3proj$check_blur.coverage" NAME="check_blur Coverage Results" MODIFIED="1494184758554" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/pt3proj$train.coverage" NAME="train Coverage Results" MODIFIED="1492595774761" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/models" />
   </component>
   <component name="CreatePatchCommitExecutor">
@@ -54,31 +52,21 @@
       <file leaf-file-name="bigdatarun.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bigdatarun.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
+            <state relative-caret-position="153">
               <caret line="10" column="20" lean-forward="false" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pythia_card.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jetimage/pythia_card.py">
+      <file leaf-file-name="run_delphes.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jetimage/run_delphes.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="8" column="8" lean-forward="false" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
+            <state relative-caret-position="850">
+              <caret line="50" column="5" lean-forward="false" selection-start-line="50" selection-start-column="5" selection-end-line="50" selection-end-column="5" />
               <folding>
                 <element signature="e#508#519#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="jet-image-maker.cc" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ext/adversarial-jets/generation/src/src/jet-image-maker.cc">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="26" lean-forward="false" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -87,7 +75,7 @@
         <entry file="file://$PROJECT_DIR$/data_gen.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="72">
-              <caret line="47" column="20" lean-forward="true" selection-start-line="47" selection-start-column="20" selection-end-line="47" selection-end-column="20" />
+              <caret line="47" column="20" lean-forward="false" selection-start-line="47" selection-start-column="20" selection-end-line="47" selection-end-column="20" />
               <folding>
                 <element signature="e#484#509#0" expanded="true" />
               </folding>
@@ -99,17 +87,17 @@
         <entry file="file://$PROJECT_DIR$/jetimage/readjet.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="119">
-              <caret line="144" column="47" lean-forward="true" selection-start-line="144" selection-start-column="47" selection-end-line="144" selection-end-column="47" />
+              <caret line="144" column="47" lean-forward="false" selection-start-line="144" selection-start-column="47" selection-end-line="144" selection-end-column="47" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="plot_tools.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="plot_tools.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/plots/plot_tools.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="43" column="117" lean-forward="false" selection-start-line="43" selection-start-column="117" selection-end-line="43" selection-end-column="117" />
+            <state relative-caret-position="106">
+              <caret line="500" column="32" lean-forward="false" selection-start-line="500" selection-start-column="32" selection-end-line="500" selection-end-column="32" />
               <folding>
                 <element signature="e#30#39#0" expanded="true" />
               </folding>
@@ -117,11 +105,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="check_blur.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="delphes_card.tcl" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/configs/delphes_card.tcl">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="6933">
+              <caret line="615" column="1" lean-forward="false" selection-start-line="615" selection-start-column="1" selection-end-line="615" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="lagan.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/models/networks/lagan.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1194">
+              <caret line="36" column="17" lean-forward="false" selection-start-line="36" selection-start-column="17" selection-end-line="36" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="check_blur.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/check_blur.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="33" column="2" lean-forward="false" selection-start-line="33" selection-start-column="2" selection-end-line="33" selection-end-column="2" />
+            <state relative-caret-position="608">
+              <caret line="40" column="17" lean-forward="false" selection-start-line="40" selection-start-column="17" selection-end-line="40" selection-end-column="17" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
               </folding>
@@ -252,8 +260,8 @@
         <option value="$PROJECT_DIR$/plots/__init__.py" />
         <option value="$PROJECT_DIR$/plots/check_blur.py" />
         <option value="$PROJECT_DIR$/jetimage/readjet.py" />
-        <option value="$PROJECT_DIR$/plots/plot_tools.py" />
         <option value="$PROJECT_DIR$/check_blur.py" />
+        <option value="$PROJECT_DIR$/plots/plot_tools.py" />
       </list>
     </option>
   </component>
@@ -368,7 +376,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.check_blur">
+  <component name="RunManager" selected="Python.plots">
     <configuration default="false" name="test" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -667,8 +675,8 @@
     </list>
     <recent_temporary>
       <list size="4">
-        <item index="0" class="java.lang.String" itemvalue="Python.check_blur" />
-        <item index="1" class="java.lang.String" itemvalue="Python.plots" />
+        <item index="0" class="java.lang.String" itemvalue="Python.plots" />
+        <item index="1" class="java.lang.String" itemvalue="Python.check_blur" />
         <item index="2" class="java.lang.String" itemvalue="Python.train" />
         <item index="3" class="java.lang.String" itemvalue="Python.test" />
       </list>
@@ -850,7 +858,21 @@
       <option name="project" value="LOCAL" />
       <updated>1493936633547</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="wrote most of &quot;Methods&quot; in report. Added check_blur as an additional plotting file. Investigating PvPD.">
+      <created>1494149751129</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1494149751129</updated>
+    </task>
+    <task id="LOCAL-00022" summary="added some results, figures only.">
+      <created>1494192545319</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1494192545319</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -867,16 +889,17 @@
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32822758" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32569557" sideWeight="0.5030257" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3535188" sideWeight="0.5060514" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2569558" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2831424" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3535188" sideWeight="0.4969743" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3535188" sideWeight="0.49394855" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" x="144" y="203" width="1125" height="361" />
       <window_info id="Remote Host" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16111952" sideWeight="0.6455696" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16111952" sideWeight="0.35443038" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16111952" sideWeight="0.35443038" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290469" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18835099" sideWeight="0.41518986" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32569557" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18835099" sideWeight="0.41518986" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12153518" sideWeight="0.503792" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39934534" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -887,7 +910,6 @@
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" x="-222" y="-980" width="774" height="847" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32569557" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -943,7 +965,9 @@
     <MESSAGE value="distribution calculation moved to plots from analysis. gen renamed to data_gen. run_generator.py for generating images from a trained weight file." />
     <MESSAGE value="added talk slides and report files" />
     <MESSAGE value="timing runs and first commit of final report, completed slides" />
-    <option name="LAST_COMMIT_MESSAGE" value="timing runs and first commit of final report, completed slides" />
+    <MESSAGE value="wrote most of &quot;Methods&quot; in report. Added check_blur as an additional plotting file. Investigating PvPD." />
+    <MESSAGE value="added some results, figures only." />
+    <option name="LAST_COMMIT_MESSAGE" value="added some results, figures only." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1024,13 +1048,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/configs/base_condor" />
-    <entry file="file://$PROJECT_DIR$/configs/ATLAS_me.tcl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="615" column="1" lean-forward="false" selection-start-line="615" selection-start-column="1" selection-end-line="615" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ext/adversarial-jets/generation/src/src/JetImageBuffer.cc">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-187">
@@ -1150,13 +1167,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/networks/lagan.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="36" column="17" lean-forward="false" selection-start-line="36" selection-start-column="17" selection-end-line="36" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ext/adversarial-jets/models/networks/lagan.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-493">
@@ -1234,16 +1244,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/train.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4216">
-          <caret line="278" column="27" lean-forward="false" selection-start-line="278" selection-start-column="27" selection-end-line="278" selection-end-column="27" />
-          <folding>
-            <element signature="e#172#209#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ext/adversarial-jets/generation/generate-events.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1888">
@@ -1296,28 +1296,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jetimage/pythia_card.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="8" column="8" lean-forward="false" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
-          <folding>
-            <element signature="e#508#519#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bigdatarun.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="10" column="20" lean-forward="false" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/data_gen.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72">
-          <caret line="47" column="20" lean-forward="true" selection-start-line="47" selection-start-column="20" selection-end-line="47" selection-end-column="20" />
+          <caret line="47" column="20" lean-forward="false" selection-start-line="47" selection-start-column="20" selection-end-line="47" selection-end-column="20" />
           <folding>
             <element signature="e#484#509#0" expanded="true" />
           </folding>
@@ -1327,27 +1309,71 @@
     <entry file="file://$PROJECT_DIR$/jetimage/readjet.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
-          <caret line="144" column="47" lean-forward="true" selection-start-line="144" selection-start-column="47" selection-end-line="144" selection-end-column="47" />
+          <caret line="144" column="47" lean-forward="false" selection-start-line="144" selection-start-column="47" selection-end-line="144" selection-end-column="47" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/plots/plot_tools.py">
+    <entry file="file://$PROJECT_DIR$/models/train.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="43" column="117" lean-forward="false" selection-start-line="43" selection-start-column="117" selection-end-line="43" selection-end-column="117" />
+        <state relative-caret-position="1866">
+          <caret line="278" column="27" lean-forward="false" selection-start-line="278" selection-start-column="27" selection-end-line="278" selection-end-column="27" />
           <folding>
-            <element signature="e#30#39#0" expanded="true" />
+            <element signature="e#172#209#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/networks/lagan.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1194">
+          <caret line="36" column="17" lean-forward="false" selection-start-line="36" selection-start-column="17" selection-end-line="36" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/configs/delphes_card.tcl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6933">
+          <caret line="615" column="1" lean-forward="false" selection-start-line="615" selection-start-column="1" selection-end-line="615" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bigdatarun.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="10" column="20" lean-forward="false" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jetimage/run_delphes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="850">
+          <caret line="50" column="5" lean-forward="false" selection-start-line="50" selection-start-column="5" selection-end-line="50" selection-end-column="5" />
+          <folding>
+            <element signature="e#508#519#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/check_blur.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="33" column="2" lean-forward="false" selection-start-line="33" selection-start-column="2" selection-end-line="33" selection-end-column="2" />
+        <state relative-caret-position="608">
+          <caret line="40" column="17" lean-forward="false" selection-start-line="40" selection-start-column="17" selection-end-line="40" selection-end-column="17" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plots/plot_tools.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="106">
+          <caret line="500" column="32" lean-forward="false" selection-start-line="500" selection-start-column="32" selection-end-line="500" selection-end-column="32" />
+          <folding>
+            <element signature="e#30#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
