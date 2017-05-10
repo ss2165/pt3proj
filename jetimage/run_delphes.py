@@ -1,5 +1,5 @@
 """Usage:
-    pythia_card.py <process> <file_name> <n_events> [-s=SEED] [--boson-mass=BOSON_MASS] [--pt-hat-min=PTHMIN] [--pt-hat-max=PTHMAX]
+    run_delphes.py <process> <file_name> <n_events> [-s=SEED] [--boson-mass=BOSON_MASS] [--pt-hat-min=PTHMIN] [--pt-hat-max=PTHMAX]
 
 Arguments:
     <process>    Process to generate card for

@@ -41,7 +41,7 @@ def plot_jet(image_array, etaran=(-1.25,1.25), phiran=(-1.25,1.25), output_name=
     # fig, ax = plt.subplots(figsize=(6, 6))
     ax = plt.gca()
     extent = phiran + etaran
-    im = ax.imshow(image_array, interpolation='nearest', norm=LogNorm(vmin=vmin, vmax=vmax), extent=extent, cmap='viridis')
+    im = ax.imshow(image_array, interpolation='nearest', norm=LogNorm(vmin=vmin, vmax=vmax), extent=extent, cmap='jet')
     cbar = plt.colorbar(im, fraction=0.05, pad=0.05)
     cbar.set_label(r'Pixel $p_T$ (GeV)', y=0.85)
     plt.xlabel(r'[Transformed] Pseudorapidity $(\eta)$')

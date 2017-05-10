@@ -17,6 +17,7 @@ import numpy as np
 import os
 import time
 
+
 def main(n_jets, gen_weights, outfile, latent_space):
     t0 = time.time()
     print(t0)
@@ -34,7 +35,7 @@ def main(n_jets, gen_weights, outfile, latent_space):
     generated_images *= 100
     generated_images = np.squeeze(generated_images)
 
-    ##Save generated images
+    # Save generated images
     # outfile = os.path.abspath('data/generated_01_6k.hdf')
     with h5py.File(os.path.abspath(outfile), 'w') as f:
         dset = f.create_dataset('image', data=generated_images)
