@@ -1,7 +1,7 @@
 % !Mode:: "TeX:UTF-8"
 \RequirePackage[l2tabu, orthodox]{nag}
 
-\documentclass[twocolumn,twoside]{article}
+\documentclass[twocolumn]{article}
 	\usepackage[parfill]{parskip}
 	\usepackage[a4paper]{geometry}
 	\usepackage[english]{isodate}
@@ -11,10 +11,8 @@
 	\usepackage{siunitx}
 		\sisetup{separate-uncertainty}
 	\usepackage{url}
-	\usepackage[title]{appendix}
 	\usepackage{microtype}
 	\usepackage[colorlinks=false, pdfborder={0 0 0}, unicode=true]{hyperref}
-	
 	\usepackage[backend=bibtex,sorting=none,giveninits=true,maxnames=3,citestyle=numeric-comp]{biblatex}
 %		\bibliographystyle{ieeetr}
 		\addbibresource{../bib/biblo} %Insert Bibliography file name
@@ -26,18 +24,21 @@
 	\usepackage{amsfonts}
 	\usepackage{booktabs}
 		\setlength\heavyrulewidth{1.5pt}
+		\renewcommand{\arraystretch}{1.2}
 	\usepackage[capitalise]{cleveref}
-	\usepackage{pgfgantt}
 	\usepackage{rotating}
 
-	\usepackage{listings}
 	\usepackage{titling}
 	\usepackage{color}
-	\usepackage{titlesec}
+	\usepackage[title]{appendix}
+%	\usepackage{titlesec}
 %		\titleformat{\section}{\normalfont\huge\bfseries}{\thechapter.}{20pt}{\huge}
 
 	\usepackage[compat=1.1.0]{tikz-feynman}
-
+	
+	\usepackage[explicit]{titlesec}		% Formating of headers and titles
+	\usepackage[normalem]{ulem}         % Formating of headers and titles
+	
 	\definecolor{mygreen}{rgb}{0.152, 0.7, 0.375}
 	\definecolor{mygray}{rgb}{0.5,0.5,0.5}
 	\definecolor{mymauve}{rgb}{0.555, 0.266, 0.676}
@@ -54,9 +55,14 @@
 \newcommand{\delphes}{\pkg{Delphes}}
 \newcommand{\around}{{\raise.17ex\hbox{$\scriptstyle\sim$}}}
 \newcommand{\gev}{\giga\electronvolt}
+
+% Section Headers
+\titleformat{name=\subsubsection,numberless}{\normalfont\normalsize}
+\titleformat{name=\subsection,numberless}{\bfseries\normalsize}
+\titleformat{name=\section,numberless}{\bfseries\Large\filcenter}{}{0em}{#1}
 %Document information
 
-\title{Machine Learning based Simulation of Particle Physics Detectors}
+\title{Machine Learning Based Simulation of Particle Physics Detectors}
 
 %\subtitle{Part III Project Report}
 %\author{Seyon \textsc{Sivarajah}, Churchill College, ss2165}
@@ -75,7 +81,7 @@
 	\center % Center everything on the page
 	
 	%----------------------------------------------------------------------------------------
-	%	HEADING SECTIONS
+	%	hEADING SECTIONS
 	%----------------------------------------------------------------------------------------
 	\includegraphics[scale=0.1]{cambridge.png}\\[1cm] % Include a department logo
 	\textsc{\LARGE University of Cambridge}\\[1.5cm]
@@ -83,15 +89,15 @@
 	\textsc{\large Part III Project Report}\\[0.5cm]
 	
 	%----------------------------------------------------------------------------------------
-	%	TITLE SECTION
+	%	tITLE SECTION
 	%----------------------------------------------------------------------------------------
 	
 	\HRule \\[0.4cm]
-	{ \huge \bfseries Machine Learning based Simulation of Particle Physics Detectors}\\[0.4cm] % Title
+	{ \huge \bfseries Machine Learning Based Simulation of Particle Physics Detectors}\\[0.4cm] % Title
 	\HRule \\[1.5cm]
 	
 	%----------------------------------------------------------------------------------------
-	%	AUTHOR SECTION
+	%	aUTHOR SECTION
 	%----------------------------------------------------------------------------------------
 	
 	\begin{minipage}{0.4\textwidth}
@@ -109,15 +115,15 @@
 	\end{minipage}\\[2in]
 	
 	%----------------------------------------------------------------------------------------
-	%	LOGO SECTION
+	%	lOGO SECTION
 	%----------------------------------------------------------------------------------------
 	
-	%\includegraphics[scale=0.4]{graphics/croc.png}\\[1cm] % Include a department logo
+	%\includegraphics[scale=0.4]{}\\[1cm] % Include a department logo
 	
 	%----------------------------------------------------------------------------------------
 	
 	%----------------------------------------------------------------------------------------
-	%	DATE SECTION
+	%	dATE SECTION
 	%----------------------------------------------------------------------------------------
 	
 	{\large \printdate{2017-05-15}}\\[2in] % Date, change the \today to a set date if you want to be precise
@@ -150,6 +156,7 @@
 	\maketitle
 	\pagenumbering{arabic}
 	\begin{abstract}
+		PLACE HOLDER INITIAL REPORT ABSTRACT
 	A key part of experimental particle physics is the simulation of a detector's response to an event. This initial report outlines the background and plans for an investigation into the possibility of using machine learning tools, and neural networks in particular, to learn and generate such simulated data. State of the art accurate simulators are slow and computationally expensive, a successful generative network could lead to a significant performance increase at manageable accuracy costs. This investigation is an attempt at a demonstration of this concept.
 \end{abstract}
 
@@ -160,7 +167,7 @@
 
 
 
-
+\clearpage
 %------------------Introduction-------------------
 \section{Introduction}
 
@@ -184,23 +191,23 @@ Jets from boosted particles is an active research field \cite{BOOST}, and where 
 This report details an application of GAN based learning to jet-images from \pkg{Delphes} (FS) output, building on the work of Oliveira et al. \cite{de2017learning} who demonstrated the principle for \pkg{Pythia} data. Jet-images were produced and pre-processed from \pkg{Delphes} output files, then used as training data for a GAN architecture. The trained network was then used to generate ``fake" images. The quality of this output was assessed by comparison to the training set. 
 
 The following chapter outlines the theoretical background of GANs and the boosted jet process considered. \Cref{sec:methods} describes the methods employed, and \cref{sec:results} presents and discusses the outcomes of the training process. Final conclusions are presented in \cref{sec:conclusions}.
-	 
+
 %------------------Theory-------------------
-\section{Theoretical Background}
+\section{Background \& Theory}
 \label{sec:theory}
 
 
 \subsection{Detectors \& Simulations}
 \label{sec:detector}
 
-\begin{figure}[H]
+\begin{figure*}[!htbp]
 	\centering
-	\includegraphics[width=0.8\linewidth]{atlasdetector}
+	\includegraphics[width=0.8\textwidth]{atlasdetector}
 	
 	\caption{Cutaway diagram showing components of ATLAS detector. Source: \cite{atlaspic}}
 	\label{fig:atlaspic}
 	
-\end{figure}
+\end{figure*}
 
 
 Modern particle detectors are a complex set of measurement systems working in unison. Taking as an example the ATLAS experiment, we can see in \cref{fig:atlaspic} a cutaway of the detector set up. Simplistically, the energy and momentum of particles travelling out from the collision are measured by the calorimeters. The solenoids create a controlled magnetic field, the direction of travel in the field and the curvature of the particles gives a measurement of charge and mass respectively. A detailed description of the detector can be found in Ref. \cite{armstrong}.
@@ -211,14 +218,14 @@ The response of a detector to a particular particle event is therefore non-trivi
 
 The results of this are the``truth events", which for our purposes is the input, $\mathbf{x}$, to any simulator under consideration. The simulator performs two key tasks, that of calculating the response of the detector as the particles travel through it, and reconstructing the underlying events from such information. The reconstruction step is performed in much the same way as actual experiments, so is a useful representation of the simulated results.        
 
-\begin{figure}[H]
+\begin{figure*}[!htbp]
 	\centering
-	\includegraphics[width=0.8\linewidth]{simdiag}
+	\includegraphics[width=0.8\textwidth]{simdiag}
 	
 	\caption{Summary of simulation process, from matrix element generation to final reconstruction from detector response.}
 	\label{fig:simdiag}
 	
-\end{figure}	
+\end{figure*}	
 
 
 An AS then propagates the input through a detailed model of the detectors to calculate the response. \pkg{Delphes}, the FS under consideration, takes a modular approach by separating the various components of the detector and performing approximate calculation and addition of stochasticity at each stage. Details of this can be found in \cite{delphes}, a summary is shown in \cref{fig:delphes}.
@@ -226,7 +233,7 @@ An AS then propagates the input through a detailed model of the detectors to cal
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.6\linewidth]{delphes}
+	\includegraphics[width=1.0\columnwidth]{delphes}
 	
 	\caption{Summary of \pkg{Delphes} modules and function. Source: \cite{delphesslid}}
 	\label{fig:delphes}
@@ -265,7 +272,7 @@ It can be shown that there exists a unique solution to this, a saddle point, str
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.6\linewidth]{goodgan}
+	\includegraphics[width=1.0\columnwidth]{goodgan}
 	
 	\caption{Generative Adversarial Nets process. Source: \cite{GoodfellowNips}}
 	\label{fig:gandiag}
@@ -282,9 +289,9 @@ Modern methods probe individual jets and their detailed substructure for identif
 The process considered in this investigation is the decay of a $W'$ boson, which, along with $Z'$, are massive gauge bosons which arise in extensions to electroweak theory. The simplest example of which is imposing an extra $SU(2)$ symmetry, i.e. $SU(2)_1 \times SU(2)_2 \times U(1)$, which gets spontaneously broken resulting in the standard electroweak $SU(2)$ \cite{pdg2012}. These particles are predicted to have masses on the order of \si{\tera\electronvolt}. The decay sequence imposed in this project is given by the Feynman diagrams in \cref{fig:feynmans}.
 
 
-	\begin{figure}[H]
+	\begin{figure}[]
 		\centering
-		\begin{subfigure}[t]{0.3\linewidth}
+		\begin{subfigure}[t]{1.0\columnwidth}
 			\centering
 			\feynmandiagram [horizontal=a to b] {
 				i1 [particle=\(f\)] -- [fermion] a -- [fermion] i2 [particle=\(\bar{f}\)],
@@ -292,8 +299,8 @@ The process considered in this investigation is the decay of a $W'$ boson, which
 				f1 [particle=\(W\)] -- [photon] b -- [photon] f2 [particle=\(Z\)],
 			};
 		\end{subfigure}%
-		~ 
-		\begin{subfigure}[t]{0.3\linewidth}
+		\\ 
+		\begin{subfigure}[t]{0.45\columnwidth}
 			\centering
 			\feynmandiagram [horizontal=a to t1, small] {
 				a [particle=\(W\)] -- [photon] t1,
@@ -301,7 +308,7 @@ The process considered in this investigation is the decay of a $W'$ boson, which
 			};
 		\end{subfigure}
 		~
-		\begin{subfigure}[t]{0.3\linewidth}
+		\begin{subfigure}[t]{0.45\columnwidth}
 			\centering
 			\feynmandiagram [horizontal=a to t1, small] {
 				a [particle=\(Z\)] -- [photon] t1,
@@ -336,7 +343,7 @@ I_i = \sum_c p_{T, i}^{(c)} = \sum_c\frac{E^{(c)}_i}{\cosh{\eta^{(c)}}_i} ,
 
 where $E^{(c)}$ and $\eta^{(c)}$ are the energy and pseudorapidity of cell $c$. \Cref{fig:calangle} shows a particle hitting an idealised cylindrical calorimeter tower configuration with a superimposed pixel grid.
 
-%\begin{figure}[H]
+%\begin{figure}[]
 %	\centering
 %	\includegraphics[width=0.5\linewidth]{etaphi}
 %	
@@ -347,7 +354,7 @@ where $E^{(c)}$ and $\eta^{(c)}$ are the energy and pseudorapidity of cell $c$. 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.5\linewidth]{calangle}
+	\includegraphics[width=1.0\columnwidth]{calangle}
 	
 	\caption{Idealised cylindrical calorimeter tower arrangement, with particles colliding along the $z$ axis. A scattered particle hits a calorimeter cell within pixel $i$ at polar angle and pseudorapidity values $\phi$ and $\eta$. Pixel division sizes are not representative; pseudorapidity diverges when approaching the $\pm z$ axis.}
 	\label{fig:calangle}
@@ -363,8 +370,8 @@ Pre-processing the images to exploit the inherent physical symmetries and remove
 	\item \textbf{Trimming} \cite{trimming}: The anti-$k_t$ algorithm is applied to the jet to cluster it in to sub-jets with $R = 0.3 k_t$, and those with less than 5\% of the transverse momentum of the overall jet are dropped. This helps to highlight the hard event under consideration, and reduces the effect of pileup (multiple proton-proton collisions in the same event). The trimming step is carried out in the initial \pkg{Delphes} run, via \pkg{FastJet}.
 	
 	
-	\item \textbf{Translation}: Using the sub-jet information from the trimming step, the jet is translated so that the sub-jet with highest transverse momentum is at the centre of the image. This step is performed when initially pixelising the calorimeter measurements. Translations in $\phi$ are rotations about the collision axis, so pixel intensities are invariant. However, translations in $\eta$ are Lorentz boosts. With the pixel intensity as defined in \cref{eq:intensity}, the pixel intensity also remains invariant under such translations. (APPENDIX SHOWING INVARIANCE?)
-	
+	\item \textbf{Translation}: Using the sub-jet information from the trimming step, the jet is translated so that the sub-jet with highest transverse momentum is at the centre of the image. This step is performed when initially pixelising the calorimeter measurements. Translations in $\phi$ are rotations about the collision axis, so pixel intensities are invariant. However, translations in $\eta$ are Lorentz boosts. With the pixel intensity as defined in \cref{eq:intensity}, the pixel intensity also remains invariant under such translations.
+	% APP invariance
 	\item \textbf{Rotation}: Once the image has been read in, it is rotated such that the sub-leading jet is directly below the leading, i.e. at an angle of $-\pi/2$ with the origin at the centre of the image. If the angle of rotation is not a multiple of $\pi/2$, which in general it is not, the rotated pixel grid will not align with the original. Thus for a general affine rotation pixel intensity redistribution via interpolation is required, this is performed using a cubic spline interpolation. If no second sub-jet is present, the image is rotated such that the principle component axis is vertically downwards. To counter the effects of interpolation, the sum of intensities is renormalised to be equal to the value before rotation in order to minimise the information lost. (MASS NOT PRESERVED, LOOK UP ROTATION)
 	
 	\item \textbf{Flip}:  The image is reflected about the central vertical axis if required such that the right is always the half with the higher total intensity. This further helps make sure the hardest features (the ones of physical interest) appear in similar positions, aiding the training procedure. 
@@ -375,7 +382,7 @@ The final three steps are demonstrated in \cref{fig:preproc} using a simplified 
 
 All jet-image generation is performed using Python v2.7, using \pkg{PyROOT} (the Python interaction module for \pkg{ROOT} \cite{root}) to read in \pkg{Delphes} objects. \pkg{Numpy} \cite{numpy} is used for image processing, alongside \pkg{Sciki-image} \cite{skimage} for the rotation. \pkg{Matplotlib} \cite{matplotlib} was used to produce all plots in this report.
 
-\begin{figure}[H]
+\begin{figure*}[!htbp]
 	\centering
 	\includegraphics[width=1.0\linewidth]{preproc_2}
 %	\input{../fig/preproc_2.pdf_tex}
@@ -383,11 +390,11 @@ All jet-image generation is performed using Python v2.7, using \pkg{PyROOT} (the
 	\caption{Demonstration of final three pre-processing steps applied to jet-images produced from PD output, with a simplified toy image. Details of the steps are in the text.}
 	\label{fig:preproc}
 	
-\end{figure}
+\end{figure*}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{ex_sig_real}
+	\includegraphics[width=1.0\columnwidth]{ex_sig_real}
 	
 	\caption{Sample jet-image from \pkg{Pythia} + \pkg{Delphes} data after pre-processing. High intensity centre (leading sub-jet) and sub-leading sub-jet directly beneath are seen. Pixel values are plotted on a log scale.}
 	\label{fig:ex_sig_real}
@@ -404,21 +411,22 @@ Further deviations from traditional GANs are required to compensate for differen
 $$
 f(x) = max(0, x)
 $$
-on an input $x$ (POSSIBLE NN and ACTIVATION APPENDIX). This helps produce a large number of null cells, and unbounded maximum. 
+% APP NN
+on an input $x$. This helps produce a large number of null cells, and unbounded maximum. 
 
 A common disadvantage of GANs is a proclivity for G to overwhelmingly produce a single sample which D struggles to classify, this is known as \textit{mode-collapse} \cite{gan1}. Minibatch discrimination \cite{improvedgan}, used here, allows D to exploit batch-level features, making collapse unfavourable for G. It also proved key for achieving high dynamic range and sparsity.
 
 An auxiliary classification task for the discriminator, as described in the ACGAN system \cite{odena2016conditional} is also employed. The Discriminator, as well as determining whether an image is real or fake, also assigns it a label corresponding to whether it is a `signal' (W' jet) or `noise' (QCD jet). Similarly, the Generator is tasked with producing an image conditioned on an input label corresponding to the process. This has not only been shown to aid the training process, but also demonstrates that a GAN could simulate a variety of physical processes, by conditioning on the input \cite{mirza2014conditional}.
 
 \Cref{fig:stitch} shows the total architecture used in this LAGAN system. 
-\begin{figure}[H]
+\begin{figure*}[!htbp]
 	\centering
-	\includegraphics[width=1.0\linewidth]{stitch}
+	\includegraphics[width=1.0\textwidth]{stitch}
 	
 	\caption{LAGAN architecture used for training. Source: \cite{de2017learning}}
 	\label{fig:stitch}
 	
-\end{figure}   
+\end{figure*}   
 
 \subsubsection{Training}
 \label{sec:training}
@@ -446,74 +454,89 @@ The blurring of high intensity cores can be better understood by comparing the p
 
 
   
-\begin{figure}[H]
+\begin{figure*}[!htbp]
 	\centering
-	\begin{subfigure}[t]{1.0\linewidth}
+	\begin{subfigure}[t]{1.0\textwidth}
 		\centering
-		\includegraphics[width=1\linewidth]{av_PvPD_sig}
+		\includegraphics[width=1\textwidth]{av_PvPD_sig}
 		\caption{W' signal}
 	\end{subfigure}%
 	\\
-	\begin{subfigure}[t]{1.0\linewidth}
+	\begin{subfigure}[t]{1.0\textwidth}
 		\centering
-		\includegraphics[width=1\linewidth]{av_PvPD_noise}
+		\includegraphics[width=1\textwidth]{av_PvPD_noise}
 		\caption{QCD noise}
 	\end{subfigure}
 
 	\caption{Comparison of average jet-images between those generated from just \pkg{Pythia} (P, left) and those also generated with \pkg{Delphes} (PD, right) on a log scale. The difference between the two images (P - PD on a pixel by pixel basis) is shown in the middle on a linear scale, with the colour map clipped to $\pm$\SI{20}{\giga\electronvolt} to aid visibility. Images for the W' signal (top) and QCD noise (bottom) are shown. \pkg{Pythia} only images from Ref. \cite{de2017learning}. }
 	\label{fig:delphes_ims}
-\end{figure}
+\end{figure*}
 
-\begin{figure}[H]
+\begin{figure*}[!htbp]
 	\centering
-	\includegraphics[width=1.0\linewidth]{av_PvPD_center}
+	\includegraphics[width=1.0\textwidth]{av_PvPD_center}
 	
 	\caption{Pixel values for $\eta=0$ axis from average jet-images (over 12.5k images)  for W' signal (left) and QCD noise (right), i.e. the average values of the signal axis.}
 	\label{fig:delphes_middle}
 	
-\end{figure} 
+\end{figure*} 
 
 \subsection{Generated Images}
 \label{sec:genims}
 
 %Training as described in \cref{sec:training} was performed for two training datasets of size \around6k and \around25k, each set containing approximately equal numbers of each class of jet-image. This section first examines the results of the latter, the more fully trained. A single training sequence on this dataset took approximately 35 hours to run on the computational resources available, and so was determined to be a reasonable maximum size. 
-This section first examines the results of the training performed on the larger 25k dataset, i.e. the more fully trained Generator (G). \Cref{fig:ex_sig_gen} is a random W' sample from G (APPENDIX WITH MORE IMAGES?) (c.f. \cref{fig:ex_sig_real}). The generated images display the two key expected properties of sparsity (majority of the pixels are not activated), and the two high intensity regions at the centre and directly below the centre.
-
+This section first examines the results of the training performed on the larger 25k dataset, i.e. the more fully trained Generator (G). \Cref{fig:ex_sig_gen} is a random W' sample from G (c.f. \cref{fig:ex_sig_real}). The generated images display the two key expected properties of sparsity (majority of the pixels are not activated), and the two high intensity regions at the centre and directly below the centre.
+%APP images
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\linewidth]{ex_sig_gen}
+	\includegraphics[width=1.0\columnwidth]{ex_sig_gen}
 	
 	\caption{Sample jet-image produced by a LAGAN Generator after being trained on a 25k PD image dataset. Pixel values are plotted on a log scale.}
 	\label{fig:ex_sig_gen}
 	
 \end{figure}
 
-%\subection{Average images}
+\subsubsection{Average image comparison}
 In order to assess the quality of the generated image distribution, a sample set was produced of the same size as the training PD set (12.5k images for each class). Average images are compared to the training data in \cref{fig:pdvg}, in the same fashion as \cref{fig:delphes_ims}. In the central and mid-range regions of the image the magnitude of intensities match training data, with a high intensity central region. Moreover, the W' high intensity lobe also includes the secondary lobe, while the QCD lobe does not.
 
 However, deficiencies in G images are readily apparent. The most clear is the empty outer regions of the averages, where negligible numbers of images have non-zero pixel values. This is largely due to the difficulties in achieving such large range in the output of the Generator. Training to achieve accuracy in the high intensity region comes at the price of a crude low intensity region. In the training data such pixels have intensities below \SI{e-2}{\gev}, four orders of magnitude below the centre. The ReLU activation layer, if insufficiently or incorrectly trained could have lead to too many pixels which are never activated.
 
-Examining the difference images shows training images have higher intensity cores, but the generated images match to within 20\%. Notably, the G average image contains certain high intensity pixels in low intensity regions (especially for W'). Similarly, there are also certain pixels in high intensity regions which are never activated. This can be explained by some degree of mode-collapse, wherein G is disproportionately activating some pixels and never activating others. This can likely be overcome to an extent with a larger training set, the effect of dataset size is discussed more in the following section.  
+Examining the difference images shows training images have higher intensity cores, but the generated images match to within 20\%. Notably, the G average image contains certain high intensity pixels in low intensity regions (especially for W'). Similarly, there are also certain pixels in high intensity regions which are never activated. This can be explained by some degree of mode-collapse, wherein G is disproportionately activating some pixels and never activating others. This can likely be overcome to an extent with a larger training set, the effect of dataset size is discussed more in \cref{sec:physical}.  
 
-%Intermediate training
-
-\begin{figure}[H]
+\begin{figure*}[!htbp]
 	\centering
-	\begin{subfigure}[t]{1.0\linewidth}
+	\begin{subfigure}[t]{1.0\textwidth}
 		\centering
-		\includegraphics[width=1\linewidth]{av_GvPD_sig}
+		\includegraphics[width=1\textwidth]{av_GvPD_sig}
 		\caption{W' signal}
 	\end{subfigure}%
 	\\
-	\begin{subfigure}[t]{1.0\linewidth}
+	\begin{subfigure}[t]{1.0\textwidth}
 		\centering
-		\includegraphics[width=1\linewidth]{av_GvPD_noise}
+		\includegraphics[width=1\textwidth]{av_GvPD_noise}
 		\caption{QCD noise}
 	\end{subfigure}
 	
 	\caption{Comparison of average jet-images (over \num{12500} images) between training data (PD, left) and those from the trained Generator (G), on a log scale. The difference between the two images (PD - G) is shown in the middle on a linear scale. Images for the W' signal (top) and QCD noise (bottom) are shown.}
 	\label{fig:pdvg}
-\end{figure}
+\end{figure*}
+
+
+\subsubsection{Interim training images}
+Some insight in to the training procedure and evaluation of the hyper parameters can be achieved by looking at intermediate results. For standard machine learning applications we could track training quality using the loss function. The GAN loss function (\cref{eq:minmax}), however, is notoriously not a useful measure of training, an issue recent reformulations are attempting to resolve \cite{wasserstein}. 
+
+We may instead examine the loss function for the auxiliary classification task (D must label as signal or noise, and G must generate conditioned on a label). \Cref{fig:auxloss} shows the loss varying over the epochs of training (for the 25k dataset), evaluated on training sets of images and a separate test set, for both G and D. Also shown are average images from G at intermediate epochs for both classes. The loss variation suggests gains made beyond 20 epochs are marginal. This is somewhat supported by the images, which superficially vary little from this point onwards. The key difference between the two classes, two lobes for signal and one for noise, is seen to develop at around epoch 30. 
+
+The value in further training may be seen in the sparsity. After beginning as random noise, initial learning produces a highly sparse average image with compact central cores. Subsequent images show more and pixels in the low-intensity regions being activated. While training up to or beyond 50 epochs may be useful in this regard, it is clear that more training data would be far more potent.
+
+	\begin{figure*}[!htbp]
+		\centering
+		\includegraphics[width=0.8\textwidth]{auxloss}
+		
+		\caption{Variation in loss function for auxiliary task with training epoch, evaluated on training and testing data sets for Generator (G) and Discriminator (D) (top). Average images from G at intermediate epochs for $W'$ (signal) and QCD (noise). The scale for pixel intensities is the same as previous figures, for example \cref{fig:pdvg}.} 
+		\label{fig:auxloss}
+		
+	\end{figure*} 
 
 \subsection{Physical Distributions}
 \label{sec:physical}
@@ -537,7 +560,7 @@ where $\eta_a$ and $\phi_a$ are axis values determined with the one-pass kt axis
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.5\linewidth]{nsub}
+	\includegraphics[width=1.0\columnwidth]{nsub}
 	
 	\caption{Distribution of $\tau_{21}$ for boosted W and QCD jets, from Ref. \cite{nsubjettiness}. An invariant mass window of \SI{65}{\gev} $< m_jet <$ \SI{95}{\gev} was imposed on jets of R=0.6, $p_T >$ \SI{300}{\gev} and $|\eta| < 1.3$.}
 	\label{fig:nsub}
@@ -548,7 +571,7 @@ The two distributions are calculated for the PD datasets of size 6k and 25k, and
 
 These observations show the value of more training data, and suggest the same scheme repeated with a training set of order \num{e6} images (as in the original investigation) could lead to significantly more accurate generated images. The well defined separation in $\tau_{21}$ also shows G is producing output conditioned on the process (the difference in average images seen in \cref{fig:delphes_ims} also supports this argument). We may also conclude that the Discriminator is showing some effectiveness in distinguishing (generated) W' and QCD images. 
 
-\begin{figure}[H]
+\begin{figure*}[!htbp]
 	\centering
 	\begin{subfigure}[t]{1.0\linewidth}
 	\centering
@@ -566,27 +589,39 @@ These observations show the value of more training data, and suggest the same sc
 	\end{subfigure}
 	\caption{Distribution of discretised image $p_T$ (top) and $n$-subjettiness $\tau_{21}$ (bottom) for 6k (left) and 25k (right) training set size.}
 	\label{fig:phys}
-\end{figure}
+\end{figure*}
 
 
 \subsection{Computational performance}
 \label{sec:comp}
 
-As the initial motivation for using machine learning was computing performance gains, run times were compared for a \textit{DelphesPythia8} call with \num{e4} events and for the Generator producing the same number of jet-images. Both tasks were performed on the same Intel\textsuperscript{\textregistered} Core\textsuperscript{\texttrademark} i5-3570 @ \SI{3.40}{\giga\hertz} machine. \cref{tab:speed} shows the event generation rates. An order of magnitude rate increase is seen with only a CPU, a GPU would likely facilitate another order of magnitude. As many HEP applications may not have a GPU available for simulation, it is still instructive to consider the CPU only case. Of course, the direct comparison of rates is not entirely justified as a jet-image does not contain all the information generated by \pythia~and \delphes, so these numbers are merely indicative.
+As the initial motivation for using machine learning was computing performance gains, run times were compared for \textit{DelphesPythia8} calls and the Generator producing the same number of jet-images. Both tasks were performed on the same Intel\textsuperscript{\textregistered} Core\textsuperscript{\texttrademark} i5-3570 @ \SI{3.40}{\giga\hertz} machine.
 
-\begin{table}[H]
+A logarithmic plot of runtime $t$ against number of events $N$ is shown in \cref{fig:performance}. Linear relationships between logarithms of the variables of the form $\log(t/s) = a\log(N) + b$ were fit to the data, the resulting coefficients are given in \cref{tab:speed}. The PD system functions linearly, calculating results for one event after another, so we would expect the runtime to grow as $\mathcal{O}(N)$. The fitted gradient is close to unity, corroborating this prediction. The Generator, however, is highly non-linear in operation thus the relationship is not well modelled by a straight line. 
+
+At large event numbers, $N \geq \num{e3}$, G provides an order of magnitude speed advantage. These results are for a CPU, a GPU would likely facilitate another order of magnitude. As many HEP applications may not have a GPU available for simulation, it is still instructive to consider the CPU only case. Of course, the direct comparison of rates is not entirely justified as a jet-image does not contain all the information generated by \pythia~and \delphes, so these numbers are merely indicative.
+\begin{figure}[H]
 	\centering
-	\begin{tabular}{cc}
-		\toprule Method  & Number of Events / \si{\second} \\
-		\midrule \pythia+\delphes  & 41\\
-		\midrule Generator  & 446\\
+	\includegraphics[width=1.0\columnwidth]{performance}
+	
+	\caption{Plot of runtime $t$ against number of events $N$ for the \pkg{Pythia}+\pkg{Delphes} (PD) system and trained LAGAN Generator (G). Linear fits to logarithms of the variables are also shown, see \cref{tab:speed} for coefficients of the fit.}
+	\label{fig:performance}
+	
+\end{figure}
+
+\begin{table}[!htbp]
+	\centering
+	\begin{tabular}{@{}lll@{}}
+		\toprule Method  & Gradient, $a$ & Constant, $b$\\
+		\midrule \pythia+\delphes  & \num{0.32+-0.07} & \num{0.3+-0.2}\\
+				 Generator  & \num{0.93+-0.03} & \num{-1.2+-0.1}\\
 		
 		\bottomrule
 	\end{tabular}
-	\caption{Comparison of events/images generated per second for \pkg{Pythia}+\pkg{Delphes} system and trained LAGAN Generator.}
+	\caption{Coefficients for linear of the form  $\log(t/s) = a\log(N) + b$ fit to data of runtime $t$ against number of events $N$. Fitted lines are shown in \cref{fig:performance}}
 	\label{tab:speed}
 \end{table}
-	
+
 \section{Conclusions}
 \label{sec:conclusions}
 This study aimed to explore the use of machine learning tools to mimic the function of fast, approximate detector simulations. Based on recent work and promise, Generative Adversarial Networks (GANs) were chosen as the generative model. The processes under consideration were jets caused by a boosted $W$ produced from the decay of a hypothetical $W'$ gauge boson, and QCD background jets. 
@@ -597,11 +632,17 @@ Generated images were superficially well matched with training data and were see
 
 The results of this investigation demonstrate that GAN based emulation of detector simulator behaviour is indeed a viable and productive goal. The presented scheme agrees reasonably well in kinetic distributions, and is computationally more efficient than the original simulation. Future work should aim to explore whether more aspects of \delphes~output could be encoded and generated in image format, whilst also improving the accuracy of images to match existing simulators. 
 %------------------References-------------------
-\printbibliography[title=References]
+\onecolumn
+
 
 \begin{appendices}
+\section{Sample Images}
 
+\section{Neural Networks and Activations}
+
+\section{Pixel Intensities}
 \end{appendices}
 
+\printbibliography[title=References]
 
 \end{document}

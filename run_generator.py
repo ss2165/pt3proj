@@ -20,12 +20,11 @@ import time
 
 def main(n_jets, gen_weights, outfile, latent_space):
     t0 = time.time()
-    print(t0)
     # gen_weights = 'models/weights_1_6k/params_generator_epoch_049.hdf5'
 
     from models.networks.lagan import generator as build_generator
     g = build_generator(latent_space, return_intermediate=False)
-    g.load_weights(os.path.abspath(gen_weights))
+    # g.load_weights(os.path.abspath(gen_weights))
 
     noise = np.random.normal(0, 1, (n_jets, latent_space))
     sampled_labels = np.random.randint(0, 2, n_jets)
@@ -40,12 +39,31 @@ def main(n_jets, gen_weights, outfile, latent_space):
     with h5py.File(os.path.abspath(outfile), 'w') as f:
         dset = f.create_dataset('image', data=generated_images)
         sigs = f.create_dataset('signal', data=sampled_labels)
-        ##
-    print("Runtime for {}".format(n_jets))
-    print(time.time() - t0)
+
+    # print("Runtime for {}".format(n_jets))
+    return time.time() - t0  # return runtime
+
+
+def performance(arguments, logfile='g_speed.txt'):
+    """
+    Helper function for running performance tests on generator
+    :param arguments: command line arguments dictionary
+    :param logfile: file to write times to
+    :return: Returns nothing
+    """
+    # exponents = np.linspace(1, 5, 9)
+    for N in np.logspace(1, 5, 9):
+        # N = int(10**e)
+        print(N)
+        t = main(N, arguments['<weights>'], arguments['<output>'],
+                 int(arguments['--latent-space']))
+        with open(logfile, 'a') as f:
+            f.write('{}\t{}\n'.format(N, t))
+
+
 if __name__ == '__main__':
     arguments = docopt(__doc__, help=True)
     print(arguments)
-
+    # performance(arguments)
     main(int(arguments['<N>']), arguments['<weights>'], arguments['<output>'],
          int(arguments['--latent-space']))

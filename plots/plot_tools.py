@@ -12,8 +12,8 @@ from tqdm import tqdm
 
 import h5py
 # Set Latex font for figures
-plt.rc('text', usetex=True)
-plt.rc('font', family='serif')
+# plt.rc('text', usetex=True)
+# plt.rc('font', family='serif')
 
 #TODO get rid of plot_jet and average_image
 
@@ -38,7 +38,7 @@ def plot_jet(image_array, etaran=(-1.25,1.25), phiran=(-1.25,1.25), output_name=
            no function returns
            saves file in ../plots/output_name
         """
-    # fig, ax = plt.subplots(figsize=(6, 6))
+    fig, ax = plt.subplots(figsize=(6, 6))
     ax = plt.gca()
     extent = phiran + etaran
     im = ax.imshow(image_array, interpolation='nearest', norm=LogNorm(vmin=vmin, vmax=vmax), extent=extent, cmap='jet')
@@ -47,10 +47,10 @@ def plot_jet(image_array, etaran=(-1.25,1.25), phiran=(-1.25,1.25), output_name=
     plt.xlabel(r'[Transformed] Pseudorapidity $(\eta)$')
     plt.ylabel(r'[Transformed] Azimuthal Angle $(\phi)$')
     plt.title(title)
-    # if output_name is None:
-    #     plt.show()
-    # else:
-    #     plt.savefig(output_name)
+    if output_name is None:
+        plt.show()
+    else:
+        plt.savefig(output_name)
 
 
 def average_image(images_array):
@@ -382,8 +382,8 @@ grid = 0.5 * (np.linspace(-1.25, 1.25, 26)[:-1] + np.linspace(-1.25, 1.25, 26)[1
 eta = np.tile(grid, (25, 1))
 phi = np.tile(grid[::-1].reshape(-1, 1), (1, 25))
 
-sixk = False
-latent_space = 200  # size of the vector z
+# sixk = False
+# latent_space = 200  # size of the vector z
 # if sixk:
 #     training_file = 'data/prepared_6k.hdf'
 #     generated_file = 'data/generated_01_6k.hdf'
@@ -402,9 +402,13 @@ latent_space = 200  # size of the vector z
 #
 #     gen_weights = 'models/weights_2_24k/params_generator_epoch_049.hdf5'
 #     disc_weights = 'models/weights_2_24k/params_discriminator_epoch_049.hdf5'
-#
+
+#EPOCH TRACKING
+epoch = '{0:02d}'.format(0)
+generated_file = 'data/generated_e{}.hdf'.format(epoch)
+
 # real_images, real_labels = load_images(training_file)
-# generated_images, sampled_labels = load_images(generated_file)
+generated_images, sampled_labels = load_images(generated_file)
 
 # from models.networks.lagan import generator as build_generator
 # g = build_generator(latent_space, return_intermediate=False)
@@ -417,15 +421,15 @@ latent_space = 200  # size of the vector z
 # generated_images *= 100
 # generated_images = np.squeeze(generated_images)
 
-##PLOT IMAGES
-#
-# signal_gen = generated_images[sampled_labels == 1]
-# noise_gen = generated_images[sampled_labels == 0]
+#PLOT IMAGES
+
+signal_gen = generated_images[sampled_labels == 1]
+noise_gen = generated_images[sampled_labels == 0]
 # signal_real = real_images[real_labels == 1]
 # noise_real = real_images[real_labels == 0]
 
-# av_sig_gen = average_image(signal_gen)
-# av_noise_gen = average_image(noise_gen)
+av_sig_gen = average_image(signal_gen)
+av_noise_gen = average_image(noise_gen)
 # av_sig_real = average_image(signal_real)
 # av_noise_real = average_image(noise_real)
 
@@ -437,7 +441,12 @@ latent_space = 200  # size of the vector z
 #     plot_jet(signal_gen[34+i])
 #     plt.show()
 
-# ##PLOTTING AVERAGES
+# PLOT AVERAGE
+plot_jet(av_sig_gen, title='W\' signal', output_name='av_sig_e{}.svg'.format(epoch))
+# plt.show()
+plot_jet(av_noise_gen, title='QCD noise', output_name='av_noi_e{}.svg'.format(epoch))
+
+# ##PLOTTING AVERAGES + DIF
 # av_p = av_sig_real
 # av_d = av_sig_gen
 #
@@ -484,46 +493,46 @@ latent_space = 200  # size of the vector z
 # pt_dist(real_images, generated_images,title='24k training set')
 
 ##N-subjettiness
-bins = np.linspace(0, 1, 50)
-plt.subplot(121)
-_ = plt.hist(np.load('data/tau21_sig_gen_6k.npy'),
-             bins=bins, histtype='step', label=r"generated ($W' \rightarrow WZ$)", normed=True, color='C2')
-_ = plt.hist(np.load('data/tau21_sig_real_6k.npy'),
-             bins=bins, histtype='step', label=r"PD ($W' \rightarrow WZ$)", normed=True, color='C2',
-             linestyle='dashed')
+# bins = np.linspace(0, 1, 50)
+# plt.subplot(121)
+# _ = plt.hist(np.load('data/tau21_sig_gen_6k.npy'),
+#              bins=bins, histtype='step', label=r"generated ($W' \rightarrow WZ$)", normed=True, color='C2')
+# _ = plt.hist(np.load('data/tau21_sig_real_6k.npy'),
+#              bins=bins, histtype='step', label=r"PD ($W' \rightarrow WZ$)", normed=True, color='C2',
+#              linestyle='dashed')
+#
+# _ = plt.hist(np.load('data/tau21_noise_gen_6k.npy'),
+#              bins=bins, histtype='step', label=r'generated (QCD dijets)', normed=True, color='C3')
+# _ = plt.hist(np.load('data/tau21_noise_real_6k.npy'),
+#              bins=bins, histtype='step', label=r'PD (QCD dijets)', normed=True, color='C3',
+#              linestyle='dashed')
+# plt.title(r'6k training set')
+# plt.xlabel(r'Discretized $\tau_{21}$ of Jet Image')
+# plt.ylabel(r'Units normalized to unit area')
+# plt.legend()
+# plt.ylim(0, 6.0)
+#
+# plt.subplot(122)
+# _ = plt.hist(np.load('data/tau21_sig_gen_24k.npy'),
+#              bins=bins, histtype='step', label=r"generated ($W' \rightarrow WZ$)", normed=True, color='C2')
+# x = np.load('data/tau21_sig_real_24k.npy')
+# _ = plt.hist(x[~np.isnan(x)],
+#              bins=bins, histtype='step', label=r"PD ($W' \rightarrow WZ$)", normed=True, color='C2',
+#              linestyle='dashed')
+#
+# _ = plt.hist(np.load('data/tau21_noise_gen_24k.npy'),
+#              bins=bins, histtype='step', label=r'generated (QCD dijets)', normed=True, color='C3')
+# _ = plt.hist(np.load('data/tau21_noise_real_24k.npy'),
+#              bins=bins, histtype='step', label=r'PD (QCD dijets)', normed=True, color='C3',
+#              linestyle='dashed')
+# plt.title(r'24k training set')
+#
+# plt.xlabel(r'Discretized $\tau_{21}$ of Jet Image')
+# plt.ylabel(r'Units normalized to unit area')
+# plt.legend()
+# plt.ylim(0, 8.0)
 
-_ = plt.hist(np.load('data/tau21_noise_gen_6k.npy'),
-             bins=bins, histtype='step', label=r'generated (QCD dijets)', normed=True, color='C3')
-_ = plt.hist(np.load('data/tau21_noise_real_6k.npy'),
-             bins=bins, histtype='step', label=r'PD (QCD dijets)', normed=True, color='C3',
-             linestyle='dashed')
-plt.title(r'6k training set')
-plt.xlabel(r'Discretized $\tau_{21}$ of Jet Image')
-plt.ylabel(r'Units normalized to unit area')
-plt.legend()
-plt.ylim(0, 6.0)
-
-plt.subplot(122)
-_ = plt.hist(np.load('data/tau21_sig_gen_24k.npy'),
-             bins=bins, histtype='step', label=r"generated ($W' \rightarrow WZ$)", normed=True, color='C2')
-x = np.load('data/tau21_sig_real_24k.npy')
-_ = plt.hist(x[~np.isnan(x)],
-             bins=bins, histtype='step', label=r"PD ($W' \rightarrow WZ$)", normed=True, color='C2',
-             linestyle='dashed')
-
-_ = plt.hist(np.load('data/tau21_noise_gen_24k.npy'),
-             bins=bins, histtype='step', label=r'generated (QCD dijets)', normed=True, color='C3')
-_ = plt.hist(np.load('data/tau21_noise_real_24k.npy'),
-             bins=bins, histtype='step', label=r'PD (QCD dijets)', normed=True, color='C3',
-             linestyle='dashed')
-plt.title(r'24k training set')
-
-plt.xlabel(r'Discretized $\tau_{21}$ of Jet Image')
-plt.ylabel(r'Units normalized to unit area')
-plt.legend()
-plt.ylim(0, 8.0)
-
-plt.show()
+# plt.show()
 
 ##SAVE TAU21 CALCULATIONS
 # tau21_sig_gen = tau21(generated_images[sampled_labels == 1])

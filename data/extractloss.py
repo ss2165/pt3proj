@@ -14,8 +14,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Set Latex font for figures
-# plt.rc('text', usetex=True)
-# plt.rc('font', family='serif')
+plt.rc('text', usetex=True)
+plt.rc('font', family='serif')
 
 def lines2num(line):
     n1 = float(line[25:29])
@@ -45,10 +45,10 @@ def main(fname):
             loss[epoch] = lines2num(lines[i+j+3])
 
     xaxis = np.arange(1,epochs+1)
-    plt.plot(xaxis, g_trai[:, 2], label=r'G_train')
-    plt.plot(xaxis, g_test[:, 2], label=r'G_test')
-    plt.plot(xaxis, d_trai[:, 2], label=r'D_train')
-    plt.plot(xaxis, d_test[:, 2], label=r'D_test')
+    plt.plot(xaxis, g_trai[:, 2], label=r'G (train)')
+    plt.plot(xaxis, g_test[:, 2], label=r'G (test)')
+    plt.plot(xaxis, d_trai[:, 2], label=r'D (train)')
+    plt.plot(xaxis, d_test[:, 2], label=r'D (test)')
     plt.xlabel(r'Epoch')
     plt.ylabel(r'Auxillary Loss')
     plt.xlim([0, 50])
