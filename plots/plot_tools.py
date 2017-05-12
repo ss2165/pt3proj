@@ -378,6 +378,18 @@ def plot_diff_jet_image_log(
     plt.title(title)
     # plt.savefig(os.path.join('..', outdir, output_name))
 
+
+def plot_just_jet(image_array, etaran=(-1.25,1.25), phiran=(-1.25,1.25), output_name=None, vmin=1e-6, vmax=300, title=''):
+    # fig, ax = plt.subplots(figsize=(6, 6))
+    axi = plt.gca()
+    extent = phiran + etaran
+    im = axi.imshow(image_array, interpolation='nearest', norm=LogNorm(vmin=vmin, vmax=vmax), extent=extent, cmap='jet')
+    axi.axis('off')
+    # if output_name is None:
+    #     plt.show()
+    # else:
+    #     plt.savefig(output_name)
+
 grid = 0.5 * (np.linspace(-1.25, 1.25, 26)[:-1] + np.linspace(-1.25, 1.25, 26)[1:])
 eta = np.tile(grid, (25, 1))
 phi = np.tile(grid[::-1].reshape(-1, 1), (1, 25))
@@ -404,7 +416,7 @@ phi = np.tile(grid[::-1].reshape(-1, 1), (1, 25))
 #     disc_weights = 'models/weights_2_24k/params_discriminator_epoch_049.hdf5'
 
 #EPOCH TRACKING
-epoch = '{0:02d}'.format(0)
+epoch = '{0:02d}'.format(1)
 generated_file = 'data/generated_e{}.hdf'.format(epoch)
 
 # real_images, real_labels = load_images(training_file)
@@ -437,6 +449,16 @@ av_noise_gen = average_image(noise_gen)
 # print(av_noise_real[12][12], av_noise_gen[12][12])
 
 ##SAMPLE
+# fig, ax = plt.subplots(figsize=(10, 2))
+# for i in range(6):
+#     ax1 = plt.subplot(1, 6, i+1)
+#     plot_just_jet(noise_gen[600+i])
+# fig.patch.set_visible(False)
+# plt.tight_layout()
+# plt.savefig('samples_noi_gen.pdf')
+
+# , output_name='samples_sig_gen_{}.svg'.format(i+1)
+
 # for i in range(3):
 #     plot_jet(signal_gen[34+i])
 #     plt.show()

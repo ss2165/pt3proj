@@ -8,10 +8,9 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ext/adversarial-jets/models/networks/hybrid.py" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ext/adversarial-jets/models/networks/lagan.py" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ext/adversarial-jets/models/networks/ops.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/plots/plot_performance.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/extractloss.py" afterPath="$PROJECT_DIR$/data/extractloss.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jetimage/run_delphes.py" afterPath="$PROJECT_DIR$/jetimage/run_delphes.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jetimage/readjet.py" afterPath="$PROJECT_DIR$/jetimage/readjet.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plots/plot_tools.py" afterPath="$PROJECT_DIR$/plots/plot_tools.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/report/report.tex" afterPath="$PROJECT_DIR$/report/report.tex" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/run_generator.py" afterPath="$PROJECT_DIR$/run_generator.py" />
@@ -27,11 +26,11 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/pt3proj$plot_performance.coverage" NAME="plot_performance Coverage Results" MODIFIED="1494434934726" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/plots" />
+    <SUITE FILE_PATH="coverage/pt3proj$plot_performance.coverage" NAME="plot_performance Coverage Results" MODIFIED="1494498458345" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/plots" />
     <SUITE FILE_PATH="coverage/pt3proj$test.coverage" NAME="test Coverage Results" MODIFIED="1492508451421" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/pt3proj$plots.coverage" NAME="plots Coverage Results" MODIFIED="1494424667483" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pt3proj$plots.coverage" NAME="plots Coverage Results" MODIFIED="1494542881333" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/pt3proj$train__1_.coverage" NAME="train (1) Coverage Results" MODIFIED="1492508436385" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ext/adversarial-jets/models" />
-    <SUITE FILE_PATH="coverage/pt3proj$extractloss.coverage" NAME="extractloss Coverage Results" MODIFIED="1494411463320" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data" />
+    <SUITE FILE_PATH="coverage/pt3proj$extractloss.coverage" NAME="extractloss Coverage Results" MODIFIED="1494534117892" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data" />
     <SUITE FILE_PATH="coverage/pt3proj$check_blur.coverage" NAME="check_blur Coverage Results" MODIFIED="1494184758554" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/pt3proj$train.coverage" NAME="train Coverage Results" MODIFIED="1492595774761" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/models" />
   </component>
@@ -78,8 +77,8 @@
       <file leaf-file-name="plot_performance.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/plots/plot_performance.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="106">
-              <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+            <state relative-caret-position="663">
+              <caret line="39" column="0" lean-forward="false" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -102,18 +101,18 @@
       <file leaf-file-name="readjet.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jetimage/readjet.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="144" column="47" lean-forward="false" selection-start-line="144" selection-start-column="47" selection-end-line="144" selection-end-column="47" />
+            <state relative-caret-position="202">
+              <caret line="118" column="10" lean-forward="false" selection-start-line="118" selection-start-column="10" selection-end-line="118" selection-end-column="10" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="plot_tools.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="plot_tools.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/plots/plot_tools.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="15" selection-end-column="32" />
+            <state relative-caret-position="204">
+              <caret line="420" column="0" lean-forward="false" selection-start-line="420" selection-start-column="0" selection-end-line="420" selection-end-column="0" />
               <folding>
                 <element signature="e#30#39#0" expanded="true" />
               </folding>
@@ -124,8 +123,8 @@
       <file leaf-file-name="extractloss.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data/extractloss.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="446">
-              <caret line="43" column="65" lean-forward="false" selection-start-line="43" selection-start-column="65" selection-end-line="43" selection-end-column="65" />
+            <state relative-caret-position="157">
+              <caret line="44" column="49" lean-forward="false" selection-start-line="44" selection-start-column="49" selection-end-line="44" selection-end-column="49" />
               <folding>
                 <element signature="e#165#174#0" expanded="true" />
               </folding>
@@ -133,11 +132,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="run_generator.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="run_generator.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/run_generator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="56" column="16" lean-forward="false" selection-start-line="56" selection-start-column="16" selection-end-line="56" selection-end-column="16" />
+            <state relative-caret-position="123">
+              <caret line="10" column="57" lean-forward="false" selection-start-line="10" selection-start-column="57" selection-end-line="10" selection-end-column="57" />
               <folding />
             </state>
           </provider>
@@ -146,7 +145,7 @@
       <file leaf-file-name="train.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/models/train.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2452">
+            <state relative-caret-position="-1220">
               <caret line="257" column="59" lean-forward="false" selection-start-line="257" selection-start-column="59" selection-end-line="257" selection-end-column="59" />
               <folding>
                 <element signature="e#172#209#0" expanded="true" />
@@ -270,13 +269,13 @@
         <option value="$PROJECT_DIR$/plots.py" />
         <option value="$PROJECT_DIR$/plots/__init__.py" />
         <option value="$PROJECT_DIR$/plots/check_blur.py" />
-        <option value="$PROJECT_DIR$/jetimage/readjet.py" />
         <option value="$PROJECT_DIR$/check_blur.py" />
-        <option value="$PROJECT_DIR$/data/extractloss.py" />
-        <option value="$PROJECT_DIR$/plots/plot_tools.py" />
         <option value="$PROJECT_DIR$/jetimage/run_delphes.py" />
-        <option value="$PROJECT_DIR$/run_generator.py" />
         <option value="$PROJECT_DIR$/plots/plot_performance.py" />
+        <option value="$PROJECT_DIR$/data/extractloss.py" />
+        <option value="$PROJECT_DIR$/jetimage/readjet.py" />
+        <option value="$PROJECT_DIR$/run_generator.py" />
+        <option value="$PROJECT_DIR$/plots/plot_tools.py" />
       </list>
     </option>
   </component>
@@ -287,8 +286,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
+    <option name="x" value="-2" />
+    <option name="y" value="-776" />
     <option name="width" value="1382" />
     <option name="height" value="744" />
   </component>
@@ -391,7 +390,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.plot_performance">
+  <component name="RunManager" selected="Python.plots">
     <configuration default="false" name="train" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -710,9 +709,9 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.plot_performance" />
-        <item index="1" class="java.lang.String" itemvalue="Python.plots" />
-        <item index="2" class="java.lang.String" itemvalue="Python.extractloss" />
+        <item index="0" class="java.lang.String" itemvalue="Python.plots" />
+        <item index="1" class="java.lang.String" itemvalue="Python.extractloss" />
+        <item index="2" class="java.lang.String" itemvalue="Python.plot_performance" />
         <item index="3" class="java.lang.String" itemvalue="Python.check_blur" />
         <item index="4" class="java.lang.String" itemvalue="Python.train" />
       </list>
@@ -922,7 +921,14 @@
       <option name="project" value="LOCAL" />
       <updated>1494408784783</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Performance graph and training tracking added to report&#10;&#10;&#10;performance_plots.py created to produce performance graph. Looping over event number added to run_*.py files">
+      <created>1494493166803</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1494493166803</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -935,7 +941,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-2" y="-776" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32822758" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -943,13 +949,13 @@
       <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2569558" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2831424" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3535188" sideWeight="0.49394855" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3535188" sideWeight="0.49394855" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" x="475" y="151" width="1125" height="361" />
-      <window_info id="Remote Host" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16111952" sideWeight="0.6455696" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16111952" sideWeight="0.35443038" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Remote Host" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18835099" sideWeight="0.61374795" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16111952" sideWeight="0.35443038" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290469" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32569557" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18835099" sideWeight="0.38625205" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18835099" sideWeight="0.38625205" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12153518" sideWeight="0.503792" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39934534" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1376,24 +1382,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jetimage/readjet.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="144" column="47" lean-forward="false" selection-start-line="144" selection-start-column="47" selection-end-line="144" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/train.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2452">
-          <caret line="257" column="59" lean-forward="false" selection-start-line="257" selection-start-column="59" selection-end-line="257" selection-end-column="59" />
-          <folding>
-            <element signature="e#172#209#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/bigdatarun.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
@@ -1412,41 +1400,59 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/extractloss.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="446">
-          <caret line="43" column="65" lean-forward="false" selection-start-line="43" selection-start-column="65" selection-end-line="43" selection-end-column="65" />
-          <folding>
-            <element signature="e#165#174#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/plots/plot_tools.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="15" selection-end-column="32" />
-          <folding>
-            <element signature="e#30#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/plots/plot_performance.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="106">
-          <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+        <state relative-caret-position="663">
+          <caret line="39" column="0" lean-forward="false" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/models/train.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1220">
+          <caret line="257" column="59" lean-forward="false" selection-start-line="257" selection-start-column="59" selection-end-line="257" selection-end-column="59" />
+          <folding>
+            <element signature="e#172#209#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/extractloss.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="44" column="49" lean-forward="false" selection-start-line="44" selection-start-column="49" selection-end-line="44" selection-end-column="49" />
+          <folding>
+            <element signature="e#165#174#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jetimage/readjet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="118" column="10" lean-forward="false" selection-start-line="118" selection-start-column="10" selection-end-line="118" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/run_generator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="56" column="16" lean-forward="false" selection-start-line="56" selection-start-column="16" selection-end-line="56" selection-end-column="16" />
+        <state relative-caret-position="123">
+          <caret line="10" column="57" lean-forward="false" selection-start-line="10" selection-start-column="57" selection-end-line="10" selection-end-column="57" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plots/plot_tools.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="420" column="0" lean-forward="false" selection-start-line="420" selection-start-column="0" selection-end-line="420" selection-end-column="0" />
+          <folding>
+            <element signature="e#30#39#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

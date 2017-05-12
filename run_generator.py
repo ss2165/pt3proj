@@ -24,7 +24,7 @@ def main(n_jets, gen_weights, outfile, latent_space):
 
     from models.networks.lagan import generator as build_generator
     g = build_generator(latent_space, return_intermediate=False)
-    # g.load_weights(os.path.abspath(gen_weights))
+    g.load_weights(os.path.abspath(gen_weights))
 
     noise = np.random.normal(0, 1, (n_jets, latent_space))
     sampled_labels = np.random.randint(0, 2, n_jets)

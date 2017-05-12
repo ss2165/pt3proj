@@ -116,7 +116,7 @@ class RootEvents:
     def __len__(self):
         return len(self.events)
     def __getitem__(self, item):
-        #enough to make iterable
+        # enough to make iterable
         return self.events[item]
 
 class JetImage:
@@ -155,19 +155,19 @@ class JetImage:
 
     @staticmethod
     def generate_coords(rang, N, N_other, flip=False):
-        #generate array of coordinate values in shape of image, over range=rang,
-        #N steps, N_other is size of other axis
+        # generate array of coordinate values in shape of image, over range=rang,
+        # N steps, N_other is size of other axis
         step = (rang[1]-rang[0])/N
         vals= np.linspace(rang[0]+step/2, rang[1]-step/2, N)
 
         return np.tile(vals, (N_other,1))
 
     def centre(self, e, p):
-        #translate coordinates to central value
+        # translate coordinates to central value
         return e-self.ec, delta_phi(p,self.pc)
 
     def sj2_rotate(self):
-        #rotate second subjet to -pi/2
+        # rotate second subjet to -pi/2
         e, p = self.centre(self.subjets[2].Eta(), self.subjets[2].Phi())
         if e < -10 or p < -10:
             print('hit')
@@ -258,16 +258,23 @@ class JetImage:
 
 
 def array2lorentz(arr):
-    #convert (1,4) array lorentz vector to TLorentzVector object
+    # convert (1,4) array lorentz vector to TLorentzVector object
     px, py, pz, E = arr
     return TLorentzVector(px, py, pz, E)
 
+
 def theta2eta(theta):
+    # convert polar angle to pseudorapidity
     return -np.log(np.tan(theta/2))
+
+
 def eta2theta(eta):
+    # convert pseudorapidity to polar angle
     return 2*np.arctan(np.exp(-eta))
+
+
 def delta_phi(p1, p2):
-    #calculate phi separation accounting for discontinuity
+    # calculate phi separation accounting for discontinuity
     return np.arccos(np.cos(abs(p1 - p2)))
 
 
